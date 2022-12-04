@@ -1,4 +1,4 @@
-#include "stdio.h"
+п»ї#include "stdio.h"
 #include "stdlib.h"
 #include "search.h"
 #include "string.h"
@@ -8,17 +8,17 @@
 
 #define EPSILON 2.220446e-16
 
-// Операция меньше или равно для двух чисел с плавающей запятой
+// РћРїРµСЂР°С†РёСЏ РјРµРЅСЊС€Рµ РёР»Рё СЂР°РІРЅРѕ РґР»СЏ РґРІСѓС… С‡РёСЃРµР» СЃ РїР»Р°РІР°СЋС‰РµР№ Р·Р°РїСЏС‚РѕР№
 #define less_eq(a, b) ((a - b < 0) || (fabs(a - b) < EPSILON))
 
-// Проверка на равенство двух чисел с плавающей запятой
+// РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ РґРІСѓС… С‡РёСЃРµР» СЃ РїР»Р°РІР°СЋС‰РµР№ Р·Р°РїСЏС‚РѕР№
 int equals(double a, double b) { return (fabs(a - b) < EPSILON); }
 
-// Функция compare для корректной работы с функцией qsort из "stdlib.h"
-// Возвращает:
-// -1, если a < b
-//0, если a == b
-//1, если a > b 
+// Р¤СѓРЅРєС†РёСЏ compare РґР»СЏ РєРѕСЂСЂРµРєС‚РЅРѕР№ СЂР°Р±РѕС‚С‹ СЃ С„СѓРЅРєС†РёРµР№ qsort РёР· "stdlib.h"
+// Р’РѕР·РІСЂР°С‰Р°РµС‚:
+// -1, РµСЃР»Рё a < b
+//0, РµСЃР»Рё a == b
+//1, РµСЃР»Рё a > b 
 int compare(const void* a, const void* b)
 {
 	if (*(double*)a - *(double*)b < 0)
@@ -29,7 +29,7 @@ int compare(const void* a, const void* b)
 		return 1;
 }
 
-// Функция перестановки двух переменных типа double
+// Р¤СѓРЅРєС†РёСЏ РїРµСЂРµСЃС‚Р°РЅРѕРІРєРё РґРІСѓС… РїРµСЂРµРјРµРЅРЅС‹С… С‚РёРїР° double
 void swap(double* a, double* b)
 {
 	double temp = *a;
@@ -37,7 +37,7 @@ void swap(double* a, double* b)
 	*b = temp;
 }
 
-// Создание массива double размерности size и заполнение случайными элементами
+// РЎРѕР·РґР°РЅРёРµ РјР°СЃСЃРёРІР° double СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё size Рё Р·Р°РїРѕР»РЅРµРЅРёРµ СЃР»СѓС‡Р°Р№РЅС‹РјРё СЌР»РµРјРµРЅС‚Р°РјРё
 double* create_array(size_t size)
 {
 	double* arr = (double*)malloc(sizeof(double) * size);
@@ -47,7 +47,7 @@ double* create_array(size_t size)
 	return arr;
 }
 
-// Вспомогательная функция partition
+// Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ partition
 size_t partition(double* arr, size_t left, size_t right)
 {
 	double mid = arr[left + (right - left) / 2];
@@ -63,8 +63,8 @@ size_t partition(double* arr, size_t left, size_t right)
 	}
 }
 
-// Собственно алгоритм сортировки Хоара
-// Используется внутри функции quicksort
+// РЎРѕР±СЃС‚РІРµРЅРЅРѕ Р°Р»РіРѕСЂРёС‚Рј СЃРѕСЂС‚РёСЂРѕРІРєРё РҐРѕР°СЂР°
+// РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІРЅСѓС‚СЂРё С„СѓРЅРєС†РёРё quicksort
 void __quicksort(double* arr, size_t left, size_t right)
 {
 	if (left < right)
@@ -75,13 +75,13 @@ void __quicksort(double* arr, size_t left, size_t right)
 	}
 }
 
-// Алгоритм сортировки Хоара
+// РђР»РіРѕСЂРёС‚Рј СЃРѕСЂС‚РёСЂРѕРІРєРё РҐРѕР°СЂР°
 void quicksort(double* arr, size_t size)
 {
 	__quicksort(arr, 0, size-1);
 }
 
-// Вспомогательная функция merge для слияния массивов
+// Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ merge РґР»СЏ СЃР»РёСЏРЅРёСЏ РјР°СЃСЃРёРІРѕРІ
 void merge(double* in, double* out, size_t left, size_t mid, size_t right)
 {
 	size_t l_curr = left;
@@ -104,8 +104,8 @@ void merge(double* in, double* out, size_t left, size_t mid, size_t right)
 	}
 }
 
-// Собственно сортировка слиянием
-// Используется внутри функции mergesort
+// РЎРѕР±СЃС‚РІРµРЅРЅРѕ СЃРѕСЂС‚РёСЂРѕРІРєР° СЃР»РёСЏРЅРёРµРј
+// РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІРЅСѓС‚СЂРё С„СѓРЅРєС†РёРё mergesort
 void __mergesort(double* in, double* out, size_t size)
 {
 	size_t step = 1;
@@ -118,7 +118,7 @@ void __mergesort(double* in, double* out, size_t size)
 	}
 }
 
-// Алгоритм сортировки слиянием
+// РђР»РіРѕСЂРёС‚Рј СЃРѕСЂС‚РёСЂРѕРІРєРё СЃР»РёСЏРЅРёРµРј
 void mergesort(double* arr, size_t size)
 {
 	double* tmp = (double*)malloc(sizeof(double) * size);
@@ -127,7 +127,7 @@ void mergesort(double* arr, size_t size)
 	free(tmp);
 }
 
-// Алгоритм сортировки пузырьком
+// РђР»РіРѕСЂРёС‚Рј СЃРѕСЂС‚РёСЂРѕРІРєРё РїСѓР·С‹СЂСЊРєРѕРј
 void bubblesort(double* arr, size_t size)
 {
 	int flag = 0;
@@ -143,7 +143,7 @@ void bubblesort(double* arr, size_t size)
 	}
 }
 
-// Алгоритм сортировки выбором
+// РђР»РіРѕСЂРёС‚Рј СЃРѕСЂС‚РёСЂРѕРІРєРё РІС‹Р±РѕСЂРѕРј
 void selectionsort(double* arr, size_t size)
 {
 	size_t current_min_ind = 0;
@@ -159,7 +159,7 @@ void selectionsort(double* arr, size_t size)
 	}
 }
 
-// Проверка правильности работы выбранного алгоритма
+// РџСЂРѕРІРµСЂРєР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚Рё СЂР°Р±РѕС‚С‹ РІС‹Р±СЂР°РЅРЅРѕРіРѕ Р°Р»РіРѕСЂРёС‚РјР°
 int check_array(double* arr, double* cpy, size_t size)
 {
 	qsort((void*)cpy, size, sizeof(double), compare);
@@ -181,18 +181,18 @@ int main()
 	clock_t start, end;
 	void (*sort) (double*, size_t) = NULL;
 
-	// Пользователь вводит размер массива,
-	setlocale(LC_ALL, "Russian");
-	printf("Введите размер массива: ");
+	setlocale(LC_ALL, "ru_RU.utf8");
+	// РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІРІРѕРґРёС‚ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°,
+	printf("Р’РІРµРґРёС‚Рµ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°: ");
 	scanf_s("%Iu", &array_size);
-	// ...количество повторений работы программы
-	printf("Введите количество итераций: ");
+	// ...РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРІС‚РѕСЂРµРЅРёР№ СЂР°Р±РѕС‚С‹ РїСЂРѕРіСЂР°РјРјС‹
+	printf("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РёС‚РµСЂР°С†РёР№: ");
 	scanf_s("%Iu", &iteration_count);
-	// ...выбирает алгоритм сортировки из четырёх предложенных
-	printf("Введите используемую сортировку:\n1. Сортировка выбором\n2. Пузырьковая сортировка\n3. Сортировка Хоара\n4. Сортировка слиянием\n");
+	// ...РІС‹Р±РёСЂР°РµС‚ Р°Р»РіРѕСЂРёС‚Рј СЃРѕСЂС‚РёСЂРѕРІРєРё РёР· С‡РµС‚С‹СЂС‘С… РїСЂРµРґР»РѕР¶РµРЅРЅС‹С…
+	printf("Р’РІРµРґРёС‚Рµ РёСЃРїРѕР»СЊР·СѓРµРјСѓСЋ СЃРѕСЂС‚РёСЂРѕРІРєСѓ:\n1. РЎРѕСЂС‚РёСЂРѕРІРєР° РІС‹Р±РѕСЂРѕРј\n2. РџСѓР·С‹СЂСЊРєРѕРІР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР°\n3. РЎРѕСЂС‚РёСЂРѕРІРєР° РҐРѕР°СЂР°\n4. РЎРѕСЂС‚РёСЂРѕРІРєР° СЃР»РёСЏРЅРёРµРј\n");
 	scanf_s("%d", &choice);
 
-	//Обработка выбора
+	//РћР±СЂР°Р±РѕС‚РєР° РІС‹Р±РѕСЂР°
 	switch (choice)
 	{
 	case 1:
@@ -216,31 +216,31 @@ int main()
 	{
 		for (size_t iteration = 0; iteration < iteration_count; iteration++)
 		{
-			// На каждой итерации создаётся новый массив и его копия
+			// РќР° РєР°Р¶РґРѕР№ РёС‚РµСЂР°С†РёРё СЃРѕР·РґР°С‘С‚СЃСЏ РЅРѕРІС‹Р№ РјР°СЃСЃРёРІ Рё РµРіРѕ РєРѕРїРёСЏ
 			if (!flag) break;
-			printf("Итераиця #%Iu: Создание массива размера %Iu...\n", iteration + 1, array_size);
+			printf("РС‚РµСЂР°РёС†СЏ #%Iu: РЎРѕР·РґР°РЅРёРµ РјР°СЃСЃРёРІР° СЂР°Р·РјРµСЂР° %Iu...\n", iteration + 1, array_size);
 			arr = create_array(array_size);
 			copy = (double*)malloc(sizeof(double) * array_size);
 			memcpy(copy, arr, sizeof(double) * array_size);
 
-			printf("Сортировка...\n");
+			printf("РЎРѕСЂС‚РёСЂРѕРІРєР°...\n");
 			start = clock();
 			sort(arr, array_size);
 			end = clock();
-			printf("Проверка...\n");
+			printf("РџСЂРѕРІРµСЂРєР°...\n");
 
 			if (check_array(arr, copy, array_size))
 			{
-				printf("Массив отсортирован правильно.\n");
+				printf("РњР°СЃСЃРёРІ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ РїСЂР°РІРёР»СЊРЅРѕ.\n");
 				approx_time = (double)(end - start) / CLOCKS_PER_SEC;
-				printf("Приблизительное затраченное время: %lf\n", approx_time);
+				printf("РџСЂРёР±Р»РёР·РёС‚РµР»СЊРЅРѕРµ Р·Р°С‚СЂР°С‡РµРЅРЅРѕРµ РІСЂРµРјСЏ: %lf\n", approx_time);
 				worst_time = max(approx_time, worst_time);
 				best_time = min(approx_time, best_time);
 				average_time = (average_time * iteration + approx_time) / (iteration + 1);
 			}
 			else
 			{
-				printf("Массив не был отсортирован.\n");
+				printf("РњР°СЃСЃРёРІ РЅРµ Р±С‹Р» РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ.\n");
 				flag = 0;
 			}
 
@@ -248,11 +248,11 @@ int main()
 			free(copy);
 		}
 
-		printf("Выполнение программы завершено. Полученные результаты:\nЛучшее время: %lf\nСреднее время: %lf\nХудшее время: %lf\n", best_time, average_time, worst_time);
+		printf("Р’С‹РїРѕР»РЅРµРЅРёРµ РїСЂРѕРіСЂР°РјРјС‹ Р·Р°РІРµСЂС€РµРЅРѕ. РџРѕР»СѓС‡РµРЅРЅС‹Рµ СЂРµР·СѓР»СЊС‚Р°С‚С‹:\nР›СѓС‡С€РµРµ РІСЂРµРјСЏ: %lf\nРЎСЂРµРґРЅРµРµ РІСЂРµРјСЏ: %lf\nРҐСѓРґС€РµРµ РІСЂРµРјСЏ: %lf\n", best_time, average_time, worst_time);
 	}
 
 	else
-		printf("Произошла ошибка.\n");
+		printf("РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.\n");
 
 	return 0;
 }
