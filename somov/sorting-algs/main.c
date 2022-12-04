@@ -235,7 +235,7 @@ int main()
 				approx_time = (double)(end - start) / CLOCKS_PER_SEC;
 				printf("Приблизительное затраченное время: %lf\n", approx_time);
 				worst_time = max(approx_time, worst_time);
-				best_time = max(approx_time, best_time);
+				best_time = min(approx_time, best_time);
 				average_time = (average_time * iteration + approx_time) / (iteration + 1);
 			}
 			else
