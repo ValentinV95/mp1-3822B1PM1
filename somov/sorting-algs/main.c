@@ -15,10 +15,6 @@
 int equals(double a, double b) { return (fabs(a - b) < EPSILON); }
 
 // Функция compare для корректной работы с функцией qsort из "stdlib.h"
-// Возвращает:
-// -1, если a < b
-//0, если a == b
-//1, если a > b 
 int compare(const void* a, const void* b)
 {
 	if (*(double*)a - *(double*)b < 0)
@@ -81,7 +77,7 @@ void quicksort(double* arr, size_t size)
 	__quicksort(arr, 0, size-1);
 }
 
-// Вспомогательная функция merge для слияния массивов
+// Вспомогательная функция merge для слияния массивов в один упорядоченный
 void merge(double* in, double* out, size_t left, size_t mid, size_t right)
 {
 	size_t l_curr = left;
@@ -173,7 +169,7 @@ int main()
 {
 	double* arr;
 	double* copy;
-	double approx_time = 0, average_time = 0, best_time = 0, worst_time = 0;
+	double approx_time = 0, average_time = 0, best_time = 1.79769e+308, worst_time = 0;
 	size_t array_size;
 	size_t iteration_count;
 	int choice;
@@ -185,14 +181,14 @@ int main()
 	// Пользователь вводит размер массива,
 	printf("Введите размер массива: ");
 	scanf_s("%Iu", &array_size);
-	// ...количество повторений работы программы
+	// ...затем вводит количество повторений работы программы
 	printf("Введите количество итераций: ");
 	scanf_s("%Iu", &iteration_count);
-	// ...выбирает алгоритм сортировки из четырёх предложенных
+	// ...затем выбирает алгоритм сортировки из четырёх предложенных
 	printf("Введите используемую сортировку:\n1. Сортировка выбором\n2. Пузырьковая сортировка\n3. Сортировка Хоара\n4. Сортировка слиянием\n");
 	scanf_s("%d", &choice);
 
-	//Обработка выбора
+	// Обработка выбора
 	switch (choice)
 	{
 	case 1:
@@ -217,11 +213,22 @@ int main()
 		for (size_t iteration = 0; iteration < iteration_count; iteration++)
 		{
 			// На каждой итерации создаётся новый массив и его копия
+			// Исходный массив сортируется с помощью выбранного алгоритма
+			// Копия массива сортируется с помощью библиотечной функции qsort
+			// Копия и исходный массив сравниваются.
+			// Если между ними нашлись различия, работа программы прерывается и выводится сообщение об ошибке
+
 			if (!flag) break;
-			printf("Итераиця #%Iu: Создание массива размера %Iu...\n", iteration + 1, array_size);
+			printf("Итерация #%Iu: Создание массива размера %Iu...\n", iteration + 1, array_size);
 			arr = create_array(array_size);
 			copy = (double*)malloc(sizeof(double) * array_size);
-			memcpy(copy, arr, sizeof(double) * array_size);
+			if(copy)
+				memcpy(copy, arr, sizeof(double) * array_size);
+			else
+			{
+				flag = 0;
+				break;
+			}
 
 			printf("Сортировка...\n");
 			start = clock();
