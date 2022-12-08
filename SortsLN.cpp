@@ -17,18 +17,18 @@ void StartSort(void (*func) (double *, int), const char* name, double *arr, int 
 int test(double *arr, int len);
 void interface1(int *arrSize, int *ranMax, int *choice);
 
-long int countDo = 0;
+long long int countDo = 0;
 long long int countCmpr = 0;
 
 int main() {
 	int arrSize;
 	int ranMax = 10000;
-	int choice;
+	int choice = 0;
 	double *arr;
 	clock_t clock1;
 	void(*sorts[4])(double*, int) = { selectionSort, insertionSort, mergeSort, combSort };
 	const char name[4][10] = { "Selection", "Insertion", "Merge", "Comb" };
-	for (arrSize = 1000; arrSize < 1001; arrSize += 1000) { // testing some numbers purposes
+	for (arrSize = 100000; arrSize < 100001; arrSize += 100000) { // testing some numbers
 		interface1(&arrSize, &ranMax, &choice);
 		arr = (double*)malloc(arrSize * sizeof(double));
 		printf_s("---\n");
@@ -53,9 +53,9 @@ void StartSort(void (*func) (double*, int), const char* name, double *arr, int a
 	if (check) {
 		showarr(arr, arrSize);
 	}
-	printf_s("%s Sort for %d elements: %li ticks\nComparisons: %lli, Swaps: %li\n", name, arrSize, (unsigned int)*clock1, countCmpr, countDo);
-	if (name[0] != 'S' && test(arr, arrSize)) {
-		printf_s("Sort was tested with Selection Sort\n");
+	printf_s("%s Sort for %d elements: %li ticks (%li seconds)\nComparisons: %lli, Movements: %lli\n", name, arrSize, (unsigned int)*clock1, (unsigned int)(*clock1/CLOCKS_PER_SEC), countCmpr, countDo);
+	if (name[0] != 'M' && test(arr, arrSize)) {
+		printf_s("Sort was tested with Merge Sort\n");
 	}
 	else {
 		printf_s("Sort didn't pass the test\n");
@@ -72,9 +72,10 @@ int test(double *arr, int len) {
 	for (int i = 0; i < len; i++) {
 		tmp[i] = arr[i];
 	}
-	selectionSort(tmp, len);
+	mergeSort(tmp, len); // use any sort
 	for (int i = 0; i < len; i++) {
 		if (tmp[i] != arr[i]) {
+			//printf_s("(%d)%lf\n", i, tmp[i]);
 			free(tmp);
 			return 0;
 		}
@@ -84,7 +85,22 @@ int test(double *arr, int len) {
 }
 
 void combSort(double *ptr, int len) {
-	return; // wip
+	int flag = 1;
+	double factor = 1.2473;
+	int step = len - 1;
+	while (flag == 1 || step != 1) {
+		flag = 0;
+		for (int i = 0; i + step < len; i++) {
+			if (ptr[i] > ptr[i + step]) {
+				swap(&ptr[i], &ptr[i + step]);
+				flag = 1;
+				countDo++; countCmpr++;
+			}
+		}
+		if (step > 1) {
+			step /= factor;
+		}
+	}
 }
 
 void mergeSort(double *ptr, int len) {
