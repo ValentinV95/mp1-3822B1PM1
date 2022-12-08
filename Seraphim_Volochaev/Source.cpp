@@ -128,7 +128,7 @@ void LSD(double* mas, ll n,ll k, ll* kol_permutation)
 	double* out = (double*)malloc(n * sizeof(double));
 	for (i = 0; i < 8; ++i)
 	{
-		(i % 2 == 0) ? radix_sort(mas, out, i, n, &*kol_permutation) : radix_sort(out, mas, i, n, &*kol_permutation);
+		(i % 2 == 0) ? radix_sort(mas, out, i, n, kol_permutation) : radix_sort(out, mas, i, n, kol_permutation);
 	}
 
 	reverse(mas, n, k, &*kol_permutation);
@@ -169,121 +169,103 @@ ll check(double* mas_a, double* mas_b, ll n)
 	return 1;
 }
 
+void answer(double* mas_a, double* mas_b, ll n, ll time, ll kol_comparison, ll kol_permutation)
+{
+	ll ch = check(mas_a, mas_b, n);
+	if (ch)
+	{
+		printf("Массив отсортирован успешно\n");
+		printf("Время сортировки: %d секунд\n", time / CLOCKS_PER_SEC);
+		printf("количество сравнений: %d\n", kol_comparison);
+		printf("количество перестановок: %d\n", kol_permutation);
+	}
+	else printf("Ошибка, не удалось отсортировать массив\n");
+}
+
 int main()
 {
 	srand(time(0));
 	setlocale(LC_CTYPE, "RUS");
 	ll x = 1;
-	printf("привет пользователь!\nДанная программа предназначена для сравнения сортировок Выбором, Расческой и Поразрядной.\nВсе тесты будут проходить на типе double.\n");
-	while (x)
+	printf("привет пользователь!\nДанная программа предназначена для сравнения сортировок Выбором, Расческой и Поразрядной.\nВсе тесты будут проходить на типе double.\n");	
+	printf("ввести кол-во элементов в массиве.\n");
+
+	ll n;
+	scanf_s("%llu", &n);
+	ll kol_negative = 0;
+	double* mas_a = (double*)malloc(n * sizeof(double));
+	double* mas_b = (double*)malloc(n * sizeof(double));
+	double* mas_c = (double*)malloc(n * sizeof(double));
+	filling(mas_a, n, &kol_negative);
+	while (1)
 	{
-		printf("ввести кол-во элементов в массиве.\n");
-		ll n;
-		scanf_s("%llu", &n);
-		ll button = 1;
-		ll kol_negative = 0;
-		double* mas_a = (double*)malloc(n * sizeof(double));
-		double* mas_b = (double*)malloc(n * sizeof(double));
-		double* mas_c = (double*)malloc(n * sizeof(double));
-		filling(mas_a, n, &kol_negative);
-		while (button == 1)
+		printf("\n");
+		printf("Menu:\n");
+		printf("Выбором - 1\n");
+		printf("Расческой - 2\n");
+		printf("Поразрядная - 3\n");
+		printf("смена кол-ва элементов массива- 4\n");
+		printf("Выход - 5\n");
+		int k;
+		scanf_s("%d", &k);
+		switch (k)
 		{
-			printf("\n");
-			printf("Menu:\n");
-			printf("Выбором - 1\n");
-			printf("Расческой - 2\n");
-			printf("Поразрядная - 3\n");
-			printf("смена кол-ва элементов массива- 4\n");
-			printf("Выход - 5\n");
-			int k;
-			scanf_s("%d", &k);
-
-			switch (k)
+			case 1:
 			{
-				case 1:
-				{
-					clock_t start, finish;
-					ll kol_comparison = 0;
-					ll kol_permutation = 0;
-					copy_(mas_a, mas_b, n);
-					copy_(mas_a, mas_c, n);
-					start = clock();
-					choice_sort(mas_b, n, &kol_comparison, &kol_permutation);
-					finish = clock();
-					ll ch = check(mas_c, mas_b, n);
-					if (ch)
-					{
-						printf("Массив отсортирован успешно\n");
-						printf("Время сортировки: %d секунд\n", (finish - start) / CLOCKS_PER_SEC);
-						printf("количество сравнений: %d\n", kol_comparison);
-						printf("количество перестановок: %d\n", kol_permutation);
-					}
-					else printf("Ошибка, массив не отсортировался\n");
-					break;
-				}
-				case 2:
-				{
-					clock_t start, finish;
-					ll kol_comparison = 0;
-					ll kol_permutation = 0;
-					copy_(mas_a, mas_b, n);
-					copy_(mas_a, mas_c, n);
-					start = clock();
-					comb_sort(mas_b, n, &kol_comparison, &kol_permutation);
-					finish = clock();
-					ll ch = check(mas_c, mas_b, n);
-					if (ch)
-					{
-						printf("Массив отсортирован успешно\n");
-						printf("Время сортировки: %d секунд\n", (finish - start)/ CLOCKS_PER_SEC);
-						printf("количество сравнений: %d\n", kol_comparison);
-						printf("количество перестановок: %d\n", kol_permutation);
-					}
-					else printf("Ошибка, массив не отсортировался\n");
-					break;
-				}
-				case 3:
-				{
-					clock_t start, finish;
-					ll kol_permutation = 0;
-					copy_(mas_a, mas_b, n);
-					copy_(mas_a, mas_c, n);
-					start = clock();
-					LSD(mas_b, n, kol_negative, &kol_permutation);
-					finish = clock();
-
-					ll ch = check(mas_c, mas_b, n);
-					if (ch)
-					{
-						printf("Массив отсортирован успешно\n");
-						printf("Время сортировки: %d секунд\n", (finish - start) / CLOCKS_PER_SEC);
-						printf("количество сравнений: 0\n");	
-						printf("количество перестановок: %d\n", kol_permutation);
-					}
-					else printf("Ошибка, массив не отсортировался\n");
-					break;
-				}
-				case 4:
-				{
-					printf("ввести кол-во элементов в массиве.\n");
-					scanf_s("%llu", &n);
-
-					mas_a = (double*)malloc(n * sizeof(double));
-					mas_b = (double*)malloc(n * sizeof(double));
-					mas_c = (double*)malloc(n * sizeof(double));
-					filling(mas_a, n, &kol_negative);
-					break;
-				}
-				case 5:
-				{
-					printf("спасибо за работу!\n");
-					button = 0;
-				}
-				default:
-					break;
-				
+				clock_t start, finish;
+				ll kol_comparison = 0;
+				ll kol_permutation = 0;
+				copy_(mas_a, mas_b, n);
+				copy_(mas_a, mas_c, n);
+				start = clock();
+				choice_sort(mas_b, n, &kol_comparison, &kol_permutation);
+				finish = clock();
+				answer(mas_c, mas_b, n, finish - start, kol_comparison, kol_permutation);
+				break;
 			}
+			case 2:
+			{
+				clock_t start, finish;
+				ll kol_comparison = 0;
+				ll kol_permutation = 0;
+				copy_(mas_a, mas_b, n);
+				copy_(mas_a, mas_c, n);
+				start = clock();
+				comb_sort(mas_b, n, &kol_comparison, &kol_permutation);
+				finish = clock();
+				answer(mas_c, mas_b, n, finish - start, kol_comparison, kol_permutation);
+				break;
+			}
+			case 3:
+			{
+				clock_t start, finish;
+				ll kol_comparison = 0;
+				ll kol_permutation = 0;
+				copy_(mas_a, mas_b, n);
+				copy_(mas_a, mas_c, n);
+				start = clock();
+				LSD(mas_b, n, kol_negative, &kol_permutation);
+				finish = clock();
+				answer(mas_c, mas_b, n, finish - start, kol_comparison, kol_permutation);
+				break;
+			}
+			case 4:
+			{
+				printf("ввести кол-во элементов в массиве.\n");
+				scanf_s("%llu", &n);
+				mas_a = (double*)malloc(n * sizeof(double));
+				mas_b = (double*)malloc(n * sizeof(double));
+				mas_c = (double*)malloc(n * sizeof(double));
+				filling(mas_a, n, &kol_negative);
+				break;
+			}
+			case 5:
+			{
+				printf("спасибо за работу!\n");
+				return 0;
+			}
+			default:
+				break;		
 		}
-		if (button == 0) break;
 	}
 }
