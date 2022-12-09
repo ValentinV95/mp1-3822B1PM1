@@ -11,10 +11,11 @@ void merge(double *arr, double *tmp, int l, int m, int r);
 void mergeSorting(double *arr, double *tmp, int l, int r);
 void mergeSort(double *ptr, int len);
 void combSort(double *ptr, int len);
+void bubbleSort(double *ptr, int len);
 
 void StartSort(void (*func) (double *, int), const char* name, double *arr, int arrSize, int ranMax, clock_t *clock1, int check);
 
-int test(double *arr, int len);
+int test(double *arr, int len, int isMerge);
 void interface1(int *arrSize, int *ranMax, int *choice);
 
 long long int countDo = 0;
@@ -43,6 +44,10 @@ int main() {
 
 
 void StartSort(void (*func) (double*, int), const char* name, double *arr, int arrSize, int ranMax, clock_t *clock1, int check) {
+	int isMerge = 0;
+	if (name[0] == 'M') {
+		isMerge = 1;
+	}
 	fillarr(arr, arrSize, ranMax);
 	if (check) {
 		showarr(arr, arrSize);
@@ -54,8 +59,13 @@ void StartSort(void (*func) (double*, int), const char* name, double *arr, int a
 		showarr(arr, arrSize);
 	}
 	printf_s("%s Sort for %d elements: %li ticks (%li seconds)\nComparisons: %lli, Movements: %lli\n", name, arrSize, (unsigned int)*clock1, (unsigned int)(*clock1/CLOCKS_PER_SEC), countCmpr, countDo);
-	if (name[0] != 'M' && test(arr, arrSize)) {
-		printf_s("Sort was tested with Merge Sort\n");
+	if (test(arr, arrSize, isMerge)) {
+		if (isMerge) {
+			printf_s("Sort was tested with Bubble Sort\n");
+		}
+		else {
+			printf_s("Sort was tested with Merge Sort\n");
+		}
 	}
 	else {
 		printf_s("Sort didn't pass the test\n");
@@ -67,12 +77,17 @@ void StartSort(void (*func) (double*, int), const char* name, double *arr, int a
 	countDo = 0;
 }
 
-int test(double *arr, int len) {
+int test(double *arr, int len, int isMerge) {
 	double *tmp = (double *)malloc(len * sizeof(double));
 	for (int i = 0; i < len; i++) {
 		tmp[i] = arr[i];
 	}
-	mergeSort(tmp, len); // use any sort
+	if (isMerge) {
+		bubbleSort(tmp, len);
+	}
+	else {
+		mergeSort(tmp, len); // use merge sort for test
+	}
 	for (int i = 0; i < len; i++) {
 		if (tmp[i] != arr[i]) {
 			//printf_s("(%d)%lf\n", i, tmp[i]);
@@ -212,4 +227,20 @@ void interface1(int *arrSize, int *ranMax, int *choice) {
 	scanf_s("%d", ranMax);
 	printf_s("Print Before/After? (1 or 0): ");
 	scanf_s("%d", choice);
+}
+
+void bubbleSort(double *ptr, int len) {
+	int flag;
+	for (int i = 1; i < len; i++) {
+		flag = 0;
+		for (int j = len-1; j >= i; j--) {
+			if (ptr[j] < ptr[j - 1]) {
+				swap(&ptr[j], &ptr[j - 1]);
+				flag = 1;
+			}
+		}
+		if (flag == 0) {
+			break;
+		}
+	}
 }
