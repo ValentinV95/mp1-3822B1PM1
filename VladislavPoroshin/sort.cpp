@@ -8,7 +8,7 @@ void swap(float* a, float* b) {
 	*a = *b;
 	*b = tmp;
 }
-void copy_(int* mas_a, int* mas_b, int size)
+void copy_(float* mas_a, float* mas_b, int size)
 {
 	int i;
 	for (i = 0; i < size; i++) mas_b[i] = mas_a[i];
@@ -37,13 +37,13 @@ int check(float* mas_a, float* mas_b, int size)
 void sign(float* input, int size, int*k_p) {
 	float* output = (float*)malloc(size * sizeof(float));
 	int key, i, j;
-	key = 0;
+	key = -1;
 	for (i = 0; i < size; i++)
 		if (input[i] < 0) {
 			key = i;
 			break;
 		}
-	if (key != 0) {
+	if (key != -1) {
 		for (j = size - 1; j >= key; j--)
 			output[size - j - 1] = input[j];
 		for (j = 0; j < key; j++)
