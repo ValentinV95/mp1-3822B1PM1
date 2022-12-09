@@ -13,7 +13,7 @@ void mergeSort(double *ptr, int len);
 void combSort(double *ptr, int len);
 void bubbleSort(double *ptr, int len);
 
-void StartSort(void (*func) (double *, int), const char* name, double *arr, int arrSize, int ranMax, clock_t *clock1, int check);
+void StartSort(void (*func) (double *, int), const char* name, double *arr, int arrSize, clock_t *clock1, int check);
 
 int test(double *arr, int len, int isMerge);
 void interface1(int *arrSize, int *ranMax, int *choice);
@@ -34,7 +34,8 @@ int main() {
 		arr = (double*)malloc(arrSize * sizeof(double));
 		printf_s("---\n");
 		for (int i = 0; i < 4; i++) {
-			StartSort(sorts[i], name[i], arr, arrSize, ranMax, &clock1, choice);
+			fillarr(arr, arrSize, ranMax);
+			StartSort(sorts[i], name[i], arr, arrSize, &clock1, choice);
 		}
 		printf_s("---\n");
 		free(arr); // eof
@@ -43,12 +44,11 @@ int main() {
 }
 
 
-void StartSort(void (*func) (double*, int), const char* name, double *arr, int arrSize, int ranMax, clock_t *clock1, int check) {
+void StartSort(void (*func) (double*, int), const char* name, double *arr, int arrSize, clock_t *clock1, int check) {
 	int isMerge = 0;
 	if (name[0] == 'M') {
 		isMerge = 1;
 	}
-	fillarr(arr, arrSize, ranMax);
 	if (check) {
 		showarr(arr, arrSize);
 	}
