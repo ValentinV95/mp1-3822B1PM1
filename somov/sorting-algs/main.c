@@ -208,6 +208,11 @@ int main()
 		break;
 	}
 
+	if (array_size <= 0)
+		flag = 0;
+	if (iteration_count <= 0)
+		flag = 0;
+
 	if (flag)
 	{
 		for (size_t iteration = 0; iteration < iteration_count; iteration++)
