@@ -34,10 +34,11 @@ int check(float* mas_a, float* mas_b, int size)
 			return 0;
 	return 1;
 }
-void sign(float* input, int size, int*k_p) {
-	float* output = (float*)malloc(size * sizeof(float));
+void sign(float* input, int size) {
+	float* output;
 	int key, i, j;
 	key = -1;
+	output = (float*)malloc(size * sizeof(float));
 	for (i = 0; i < size; i++)
 		if (input[i] < 0) {
 			key = i;
@@ -48,13 +49,11 @@ void sign(float* input, int size, int*k_p) {
 			output[size - j - 1] = input[j];
 		for (j = 0; j < key; j++)
 			output[j + size - key] = input[j];
-		for (j = 0; j < size; j++) {
-			if (input[j] != output[j])++* k_p;
+		for (j = 0; j < size; j++)
 			input[j] = output[j];
-		}
 	}
 }
-void radix(float* input, int size, int* k_p) {
+void radix(float* input, int size) {
 	int i, j;
 	int step = 4;
 	int number;
@@ -79,16 +78,13 @@ void radix(float* input, int size, int* k_p) {
 			output[sum[mas[i]]] = input[i / step];
 			sum[mas[i]]++;
 		}
-		for (i = 0; i < size; i++) {
-			if (input[i] != output[i]) ++*k_p;
+		for (i = 0; i < size; i++)
 			input[i] = output[i];
-		}
 	}
-	sign(input, size, &*k_p);
+	sign(input, size);
 }
-void shell(float* input, int size, int* k_p, int* k_s) {
-	int i, j, k; 
-	float tmp;
+void shell(float* input, int size, long long int* k_p, long long int* k_s) {
+	int i, j, k;
 	for (i = size / 2; i > 0; i /= 2)
 		for (j = i; j < size; j++)
 			for (k = j - i; (k > -1) && (++*k_s && (input[k] > input[k + i])); k -= i) {
@@ -96,7 +92,7 @@ void shell(float* input, int size, int* k_p, int* k_s) {
 				++*k_p;
 			}
 }
-void bubble(float* input, int size, int*k_p, int*k_s) {
+void bubble(float* input, int size, long long int*k_p, long long int*k_s) {
 	int i, j, swapped;
 	for (i = 0; i < size - 1; i++) {
 		swapped = 0;
@@ -114,23 +110,27 @@ void general(float* input, int size)
 {
 	int i;
 	for (i = 0; i < size; i++) {
-		input[i] = ((float)rand() + 0.01) /(float)(rand());
-		if (rand() % 2)
+		input[i] = ((float)rand()) /(0.01 + (float)(rand()));
+		if (rand() % 2 == 0 && input[i] != 0)
 			input[i] = -input[i];
 	}
 }
-void main() {
+int main() {
+	float* mas_a;
+	float* mas_b;
+	float* mas_c;
+	int n;
 	srand(time(0));
 	setlocale(LC_CTYPE, "RUS");
 	printf("Введите количество элементов в массиве\n");
-	int n;
 	scanf_s("%d", &n);
-	float* mas_a = (float*)malloc(n * sizeof(float));
-	float* mas_b = (float*)malloc(n * sizeof(float));
-	float* mas_c = (float*)malloc(n * sizeof(float));
+	mas_a = (float*)malloc(n * sizeof(float));
+	mas_b = (float*)malloc(n * sizeof(float));
+	mas_c = (float*)malloc(n * sizeof(float));
 	general(mas_a, n);
 	while (1)
 	{
+		int s;
 		printf("\n");
 		printf("Меню:\n");
 		printf("Пузырёк - 1\n");
@@ -138,27 +138,27 @@ void main() {
 		printf("Поразрядная - 3\n");
 		printf("Изменить количество элементов в массиве - 4\n");
 		printf("Выход - 5\n");
-		int s;
 		scanf_s("%d", &s);
 		switch (s)
 		{
 		case 1:
 		{
 			clock_t start, finish;
-			int k_p = 0;
-			int k_s = 0;
+			long long int k_p = 0;
+			long long int k_s = 0;
+			int ch;
 			copy_(mas_a, mas_b, n);
 			copy_(mas_a, mas_c, n);
 			start = clock();
 			bubble(mas_b, n, &k_s, &k_p);
 			finish = clock();
-			int ch = check(mas_c, mas_b, n);
+			ch = check(mas_c, mas_b, n);
 			if (ch)
 			{
 				printf("Массив успешно отсортирован\n");
-				printf("Время сортировки: %d секунд\n", (finish - start) / CLOCKS_PER_SEC);
-				printf("количество сравнений: %d\n", k_s);
-				printf("количество перестановок: %d\n", k_p);
+				printf("Время сортировки: %lf секунд\n", (finish - start) / (double)CLOCKS_PER_SEC);
+				printf("количество сравнений: %lld\n", k_s);
+				printf("количество перестановок: %lld\n", k_p);
 			}
 			else printf("Ошибка, не удалось отсортировать массив\n");
 			break;
@@ -166,20 +166,21 @@ void main() {
 		case 2:
 		{
 			clock_t start, finish;
-			int k_s = 0;
-			int k_p = 0;
+			long long int k_p = 0;
+			long long int k_s = 0;
+			int ch;
 			copy_(mas_a, mas_b, n);
 			copy_(mas_a, mas_c, n);
 			start = clock();
 			shell(mas_b, n, &k_s, &k_p);
 			finish = clock();
-			int ch = check(mas_c, mas_b, n);
+			ch = check(mas_c, mas_b, n);
 			if (ch)
 			{
 				printf("Массив успешно отсортирован\n");
-				printf("Время сортировки: %d секунд\n", (finish - start) / CLOCKS_PER_SEC);
-				printf("количество сравнений: %d\n", k_s);
-				printf("количество перестановок: %d\n", k_p);
+				printf("Время сортировки: %lf секунд\n", (finish - start) / (double)CLOCKS_PER_SEC);
+				printf("количество сравнений: %lld\n", k_s);
+				printf("количество перестановок: %lld\n", k_p);
 			}
 			else printf("Ошибка, не удалось отсортировать массив\n");
 			break;
@@ -187,19 +188,17 @@ void main() {
 		case 3:
 		{
 			clock_t start, finish;
-			int k_p = 0;
+			int ch;
 			copy_(mas_a, mas_b, n);
 			copy_(mas_a, mas_c, n);
 			start = clock();
-			radix(mas_b, n, &k_p);
+			radix(mas_b, n);
 			finish = clock();
-			int ch = check(mas_c, mas_b, n);
+			ch = check(mas_c, mas_b, n);
 			if (ch)
 			{
 				printf("Массив отсортирован успешно\n");
-				printf("Время сортировки: %d секунд\n", (finish - start) / CLOCKS_PER_SEC);
-				printf("количество сравнений: 0\n");
-				printf("количество перестановок: %d\n", k_p);
+				printf("Время сортировки: %lf секунд\n", (finish - start) / (double)CLOCKS_PER_SEC);
 			}
 			else printf("Ошибка, не удалось отсортировать массив\n");
 			break;
@@ -223,4 +222,5 @@ void main() {
 			break;
 		}
 	}
+	return(0);
 }
