@@ -1,4 +1,5 @@
 ﻿
+
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>
@@ -132,6 +133,11 @@ int main()
 		arrcheck[i] = arr[i];
 	}
 	printf("Array: \n");
+	
+	for (int i = 0; i < size; i++) {
+		printf("%f ", arr[i]);
+	}
+	
 	printf("\n\nSelect sorting: enter 1 for MergeSort; 2 for QuickSort; 3 for SelectSort; 4 for InsertSort \n");
 	do {
 		scanf_s("%d", &choice);
@@ -163,6 +169,11 @@ int main()
 	}
 
 	printf("Sorted array: \n");
+	
+	for (int i = 0; i < size; i++) {
+		printf("%f ", arr[i]);
+	}
+	
 	printf("\nTime: %f\n", (fn - st) / (double)(CLOCKS_PER_SEC));
 
 
