@@ -1,8 +1,28 @@
-﻿#include <iostream>
-#include <stdlib.h>
+﻿#include "stdio.h"
+#include "stdlib.h"
 #include "time.h"
-#include <locale.h>
+#include "locale.h"
 
+int compare(const void* a, const void* b)
+{
+    const float* arg1, * arg2;
+    arg1 = (const float*)a;
+    arg2 = (const float*)b;
+    if ((*arg1 - *arg2) < 0) return -1;
+    else
+    {
+        if ((*arg1 - *arg2) > 0) return 1;
+        else return 0;
+    }
+}
+int check(float* mas_a, float* mas_b, int size)
+{
+    qsort(mas_a, size, sizeof(float), compare);
+    for (int i = 0; i < size; i++)
+        if ((mas_a[i] - mas_b[i]) > 1e-8 || (mas_a[i] - mas_b[i]) < -(1e-8))
+            return 0;
+    return 1;
+}
 
 void* malloc(size_t size);
 
@@ -11,7 +31,7 @@ float* creature(int size)
     float* mas;
     mas = (float*)malloc(sizeof(float*) * size);
     for (int i = 0; i < size; i++)
-       mas[i] = rand() + ((float)rand() / ((float)RAND_MAX));
+       mas[i] =rand() + ((float)rand() / ((float)RAND_MAX));
     return mas;
 }
 
@@ -49,8 +69,6 @@ void Insert(float* array, int size)
             if (array[j] < array[j - 1])
                 swap(&array[j], &array[j - 1]);
             else break;
-    for (int i = 0; i < size; i++)
-        printf("%f ", array[i]);
 }
 
 int partition(float* mas, int l, int r)
@@ -120,6 +138,9 @@ int main()
     printf("Введите количество элементов\n");
     scanf_s("%i", &n);
     arr = creature(n);
+    arr1 = (float*)malloc(sizeof(float*) * n);
+    for (int i = 0; i < n; i++)
+        arr1[i] = arr[i];
     printf("5 - Вывод массива \n");
     scanf_s("%i", &nachalo);
     if (nachalo == 5)
@@ -158,5 +179,10 @@ int main()
     printf("\n");
     printf("Время, коорое потребовалось : ");
     printf("%f\n", (finish - start) / (double)(CLOCKS_PER_SEC));
+    printf("Проверка корректности: ");
+    if (check(arr1, arr, n) == 1)
+        printf("Сортировка работает корректно");
+    else
+        printf("Сортировка работает некорректно");
     return 0;
 }
