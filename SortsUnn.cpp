@@ -28,9 +28,9 @@ void bubble_sort(float* arr, int n) {
                 flag = 1;
             }
         }
+        if (flag == 0)
+            break;
     }
-    if (flag == 0)
-        return;
 }
 
 
@@ -153,7 +153,7 @@ int check(float* arr, float* arrforsort, int n) {
     float* qarr = 0;
     qarr = (float*)malloc(sizeof(float) * n);
     qarr = arr;
-    qsort(qarr, n, sizeof(float*), compare);
+    qsort(qarr, n, sizeof(float), compare);
     for (i = 0; i < n; i++) {
         if (qarr[i] != arrforsort[i]) {
             return 0;
