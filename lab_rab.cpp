@@ -11,8 +11,39 @@ void swap(double* a, double* b)
 	*b = t;
 }
 
+int compare(const void* a, const void* b)
+{
+	double a1, a2;
+	a1 = *(const double*)a;
+	a2 = *(const double*)b;
+
+	if (a1 < a2)
+		return -1;
+	if (a1 > a2)
+		return 1;
+	return 0;
+}
+int check(double* mas1, double* mas, int na)
+{
+	int i;
+	double* arr;
+	arr = (double*)malloc(sizeof(double) * na);
+	arr = mas;
+	qsort(arr, na, sizeof(double), compare);
+	for (i = 0; i < na - 1; i++)
+		if (mas1[i] != arr[i])
+			return 0;
+	return 1;
+}
+void check_res(double* mas, double* mas1, int na)
+{
+	if (check(mas, mas1, na))
+		printf("\nмассив отсортирован верно\n");
+	else printf("\nОшибка сортировки");
+}
+
 //сортировка пузырьком
-void bubble(double *mas, int na) {
+void bubble(double* mas, int na) {
 	clock_t start, end;
 	double ti = 0;
 	int flag = 0;
@@ -24,23 +55,23 @@ void bubble(double *mas, int na) {
 			if (mas[j] > mas[j + 1]) {
 				swap(&mas[j], &mas[j + 1]);
 				flag = 1;
-			} 
+			}
 		if (flag == 0) break;
-	}	
+	}
 	end = clock();
-	ti = (end - start)/(double)(CLOCKS_PER_SEC);
-	printf("Отсортированный массив: ");
+	ti = (end - start) / (double)(CLOCKS_PER_SEC);
+	/*printf("Отсортированный массив: ");
 	for (int i = 0; i < na; i++)
-		printf("%lf ", mas[i]);
+		printf("%lf ", mas[i]);*/
 	printf("\nзатраченное время: %lf", ti);
 }
 
-
 //сортировка вставками
-int place(double* mas, double r, int k)//определение местоположения элемента
+//определение местоположения элемента
+int place(double* mas, double r, int k)
 {
 	int s = k;
-	for (int i=0; i<k; i++)
+	for (int i = 0; i < k; i++)
 		if (mas[i] > r)
 		{
 			s = i;
@@ -49,7 +80,8 @@ int place(double* mas, double r, int k)//определение местопол
 	return s;
 }
 
-void shift(double* mas, int s, int k)//сдвиг для места элемента
+//сдвиг для места элемента
+void shift(double* mas, int s, int k)
 {
 	for (int i = k; i > s; i--)
 		mas[i] = mas[i - 1];
@@ -71,9 +103,9 @@ void insert(double* mas, int na)
 	}
 	end = clock();
 	ti = (end - start) / (double)(CLOCKS_PER_SEC);
-	printf("Отсортированный массив: ");
+	/*printf("Отсортированный массив: ");
 	for (int i = 0; i < na; i++)
-		printf("%lf ", mas[i]);
+		printf("%lf ", mas[i]);*/
 	printf("\nзатраченное время: %lf", ti);
 }
 
@@ -84,21 +116,20 @@ void shell(double* mas, int na)
 	double t;
 	double ti = 0;
 	start = clock();
-	for (int i = na / 2; i > 0; i /= 2)//расстояние между элементами
+	for (int i = na / 2; i > 0; i /= 2)//шаг между элементами
 		for (int j = i; j < na; j++)
-			for (int k = j; k-i >= 0; mas[k] < mas[k - 1], k -= i)
-					swap(&mas[k], &mas[k - i]);
+			for (int k = j - i; k >= 0 && mas[k] > mas[k + i]; k -= i)
+				swap(&mas[k], &mas[k + i]);
 	end = clock();
 	ti = (end - start) / (double)(CLOCKS_PER_SEC);
-	printf("Отсортированный массив: ");
+	/*printf("Отсортированный массив: ");
 	for (int i = 0; i < na; i++)
-		printf("%lf ", mas[i]);
+		printf("%lf ", mas[i]);*/
 	printf("\nзатраченное время: %lf", ti);
 }
 
-
-
 //сортировка слиянием
+//обмен местами
 void merge(double* mas, int first, int last)
 {
 	int l, r, m;
@@ -116,12 +147,12 @@ void merge(double* mas, int first, int last)
 		}
 		else
 		{
-			a [i - first] = mas[r];
+			a[i - first] = mas[r];
 			r++;
 		}
 	}
 	for (int j = first; j <= last; j++)
-		mas[j] = a [j - first];
+		mas[j] = a[j - first];
 
 }
 
@@ -140,12 +171,12 @@ void mergesort(double* mas, int na)
 	clock_t start, end;
 	double ti = 0;
 	start = clock();
-	mergesort1(mas, 0, na-1);
+	mergesort1(mas, 0, na - 1);
 	end = clock();
 	ti = (end - start) / (double)(CLOCKS_PER_SEC);
-	printf("Отсортированный массив: ");
-	for (int i = 0; i < na; i++)
-		printf("%lf ", mas[i]);
+	//printf("Отсортированный массив: ");
+	//for (int i = 0; i < na; i++)
+	//	printf("%lf ", mas[i]);
 	printf("\nзатраченное время: %lf", ti);
 }
 
@@ -155,6 +186,7 @@ int main()
 {
 	setlocale(LC_CTYPE, "RUS");
 	int n = 0;//размер массива
+	clock_t start, end;
 	double a, b; //значения концов отрезка, в котором находятся элементы
 	int k = 0; //выбор номера сортировки
 
@@ -170,51 +202,58 @@ int main()
 
 	//генерирование массива с рандомными элементами
 	srand(time(NULL));
-	for (int i = 0; i < n; i++) 
-		mas[i] = ((double)rand() / ((double)RAND_MAX)) * (b-a)+a;
+	for (int i = 0; i < n; i++)
+		mas[i] = ((double)rand() / ((double)RAND_MAX)) * (b - a) + a;
 	mas1 = mas;
 
-	//вывод изачального массива
-	for (int i = 0; i < n; i++)
-		printf("%lf ", mas1[i]);
-	
+	////вывод изачального массива
+	//for (int i = 0; i < n; i++)
+	//	printf("%lf ", mas1[i]);
+
 	printf("\n1.Сортировка пузырьком");
 	printf("\n2.Сортировка вставками");
 	printf("\n3.Сортировка Шелла");
 	printf("\n4.Сортировка слиянием");
 	printf("\n5.Конец\n\n");
-	
+
 	while (k != 5)
 	{
-	printf("\nвыберите номер команды: ");
-	scanf_s("%d", &k);
-
-	
-    switch (k)
-	{
-	case 1:
-		bubble(mas1, n);
-		mas1 = mas;
-		break;
-
-	case 2:
-		insert(mas1, n);
-		mas1 = mas;
-		break;
+		printf("\nвыберите номер команды: ");
+		scanf_s("%d", &k);
 
 
-	case 3:
-		shell(mas1, n);
-		mas1 = mas;
-		break;
+		switch (k)
+		{
+		case 1:
+			bubble(mas1, n);
+			check_res(mas1, mas, n);
+			mas1 = mas;
+			break;
 
-    case 4:
-		mergesort(mas1, n);
-		break;
+		case 2:
+			insert(mas1, n);
+			check_res(mas1, mas, n);
+			mas1 = mas;
+			break;
 
-	default:
-		break;
+
+		case 3:
+			shell(mas1, n);
+			check_res(mas1, mas, n);
+			mas1 = mas;
+			break;
+
+		case 4:
+			mergesort(mas1, n);
+			check_res(mas1, mas, n);
+			mas1 = mas;
+			break;
+
+		case 5: break;
+		default:
+			printf("Неправильный ввод данных");
+			break;
+		}
 	}
-	}
-	
+
 }
