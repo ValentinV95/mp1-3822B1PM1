@@ -1,0 +1,4 @@
+﻿  lab_rab.cpp
+C:\Users\Тая\source\repos\lab_rab\lab_rab\lab_rab.cpp(84,9): warning C4101: t: неиспользованная локальная переменная
+C:\Users\Тая\source\repos\lab_rab\lab_rab\lab_rab.cpp(172,8): warning C4244: функция: преобразование "time_t" в "unsigned int", возможна потеря данных
+  lab_rab.vcxproj -> C:\Users\Тая\source\repos\lab_rab\x64\Debug\lab_rab.exe
