@@ -1,6 +1,0 @@
-﻿  ConsoleApplication1.cpp
-C:\Users\asus\OneDrive\Рабочий стол\ЯМП\ЛБР1\mp1-3822B1PM1\Сортировки\ConsoleApplication1\ConsoleApplication1.cpp(27,26): warning C4273: malloc: несовместимое связывание dll
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(101,15): message : см. предыдущее определение "malloc"
-C:\Users\asus\OneDrive\Рабочий стол\ЯМП\ЛБР1\mp1-3822B1PM1\Сортировки\ConsoleApplication1\ConsoleApplication1.cpp(102,25): warning C4305: инициализация: усечение из "double" в "float"
-C:\Users\asus\OneDrive\Рабочий стол\ЯМП\ЛБР1\mp1-3822B1PM1\Сортировки\ConsoleApplication1\ConsoleApplication1.cpp(109,17): warning C4244: /=: преобразование "float" в "int", возможна потеря данных
-  ConsoleApplication1.vcxproj -> C:\Users\asus\OneDrive\Рабочий стол\ЯМП\ЛБР1\mp1-3822B1PM1\Сортировки\x64\Debug\ConsoleApplication1.exe
