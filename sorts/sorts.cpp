@@ -90,7 +90,7 @@ void select(double* a, int n) {
 	double tmp;
 	for (i = 0; i < n - 1; i++) {
 			mini= i;
-			for (j = i; j < n; j++)
+			for (j = i+1; j < n; j++)
 				if (a[j] < a[mini])
 					mini = j;
 			tmp = a[mini];
