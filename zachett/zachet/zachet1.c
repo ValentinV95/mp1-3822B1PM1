@@ -5,12 +5,12 @@
 #include <time.h>
 #include <string.h>
 
-#define MENU_SIZE 8
+#define MENU_SIZE 7
 
 #define EPSILON 2.220446e-16
 
 
-char* menu[MENU_SIZE] = { "Изменение длинны массива (0)",  "Сортировка Пузырьком (1)", "Сортировка Выбором (2)", "Сортировка Хоара (3)", "Поразрядная сортировка (4)", "Копировать массив А в массивы В и С (5)", "Проверить правильность выполненной сортировки (6)", "Выход (7)"};
+char* menu[MENU_SIZE] = { "Изменение длинны массива (0)", "Сортировка Выбором (1)", "Сортировка Хоара (2)", "Поразрядная сортировка (3)", "Копировать массив А в массивы В и С (4)", "Проверить правильность выполненной сортировки (5)", "Выход (6)"};
 
 void seal(char** menu)
 {
@@ -59,7 +59,7 @@ void choice(double* mas,int dlin)
 	}
 }
 
-void bubble(double* mas, int dlin)
+/*void bubble(double* mas, int dlin)
 {
 	for (int i = 0; i < dlin - 1; i++)
 	{
@@ -79,7 +79,7 @@ void bubble(double* mas, int dlin)
 			break;
 		}
 	}
-}
+}*/
 
 void copy(double* mas1, double* mas2, int dlin)
 {
@@ -235,27 +235,27 @@ int main()
 			copy(mas_a, mas_c, dlin); 
 			seal(menu);
 			break; }
-		case 1: {long long start, finish; start = clock(); 
+		/*case 1: {long long start, finish; start = clock();
 			bubble(mas_b, dlin); 
 			finish = clock(); 
 			printf_s("\nВремя сортировки Пузырьком:  %.40lf\n", (finish - start) * 1.0 / CLOCKS_PER_SEC); 
 			seal(menu); 
-			break; }
-		case 2: {long long start, finish; 
+			break; }*/
+		case 1: {long long start, finish; 
 			start = clock(); 
 			choice(mas_b, dlin); 
 			finish = clock(); 
 			printf_s("\nВремя сортировки Выбором:  %.40lf\n", (finish - start) * 1.0 / CLOCKS_PER_SEC); 
 			seal(menu); 
 			break; }
-		case 3: {long long start, finish; 
+		case 2: {long long start, finish; 
 			start = clock(); 
 			qs(mas_b, 0, dlin-1); 
 			finish = clock(); 
 			printf_s("\nВремя сортировки Хоара:  %.40lf\n", (finish - start) * 1.0 / CLOCKS_PER_SEC); 
 			seal(menu); 
 			break; }
-		case 4: {int k = 0;
+		case 3: {int k = 0;
 			minus(mas_a, dlin, &k);
 			long long start, finish; start = clock(); 
 			LSD(mas_b, dlin, k); 
@@ -263,11 +263,11 @@ int main()
 			printf_s("\nBремя сортировки Поразрядной:  %.40lf\n", (finish - start) * 1.0 / CLOCKS_PER_SEC); 
 			seal(menu); 
 			break; }
-		case 5: {copy(mas_a, mas_b, dlin); 
+		case 4: {copy(mas_a, mas_b, dlin); 
 			copy(mas_a, mas_c, dlin); 
 			seal(menu); 
 			break; }
-		case 6: {if (check_mas(mas_c, mas_b, dlin))
+		case 5: {if (check_mas(mas_c, mas_b, dlin))
 		{
 			printf_s("Сортировка выполнена верно\n");
 		}
@@ -278,9 +278,9 @@ int main()
 			  seal(menu); 
 			  break; }
 
-		case 7: {flag = 0; 
+		case 6: {flag = 0; 
 			break; }
-		case 8: {output(mas_b, dlin);
+		case 9: {output(mas_b, dlin);
 			seal(menu);
 			break; }
 		}
