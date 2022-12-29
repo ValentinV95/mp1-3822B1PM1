@@ -1,0 +1,4 @@
+﻿  Сортировки.cpp
+C:\Users\alena\source\repos\Сортировки\Сортировки\Сортировки.cpp(68,18): warning C4244: функция: преобразование "double" в "int", возможна потеря данных
+C:\Users\alena\source\repos\Сортировки\Сортировки\Сортировки.cpp(11): warning C4716: prmenu: должна возвращать значение
+  Сортировки.vcxproj -> C:\Users\alena\source\repos\Сортировки\x64\Debug\Сортировки.exe
