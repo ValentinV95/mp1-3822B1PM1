@@ -12,9 +12,9 @@ int comp(const void* a, const void* b) //checked
 }
 void swp(double* a, double* b) //checked
 {
-	double * tmp = a;
-	a = b;
-	b = tmp;
+	double tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
 bool correct(double* in, double* sort, int n) //Верная функция проверки сортировки
 {
@@ -42,20 +42,9 @@ void bubble(double* in, int  n) //checked
 		}
 	}
 }
-void oldcomb(double* in, int n) //Оригинальный нерабочая расчёска
-{
-	float factor = 1.246;
-	int step = n - 1, i;
-	while (step != 0) {
-		for (i = 0; i + step < n; i++)
-			if (in[i] > in[i + step])
-				swp(&in[i], &in[i + step]);
-		step /= factor;
-	}
-}
 void comb(double* in, int n)  //Модернизированная расчёска
 {
-	double factor = 1.246;
+	double factor = 1.247;
 	int step = n - 1, i, f = 1;
 	while (step != 1 || f == 1)
 	{
@@ -104,20 +93,6 @@ void radix_unsigned(unsigned long long* mas, int n, unsigned long long* mas_tmp)
 	}
 
 }
-void radix_signed(long long* mas, int n, long long* tmp)
-{
-	int count = 0, i = 0;
-	radix_unsigned((unsigned long long*)mas, n, (unsigned long long*)tmp);
-	while (count < n && mas[count++] >= 0);
-	count--;
-	for (; count < n; count++)
-		tmp[i++] = mas[count];
-	count = 0;
-	for (; i < n; i++)
-		tmp[i] = mas[count++];
-	for(i=0;i<n;i++)
-		mas[i] = tmp[i];
-}
 void radix_double(double* mas, int n, double* tmp)
 {
 	int count = 0, i = n - 1;
@@ -140,7 +115,7 @@ int main()
 	int choise, action;
 	clock_t start, fin;
 	setlocale(LC_ALL, "Rus");
-	while (1)
+	while (true)
 	{
 		printf("Введите количество элементов в массиве:\n");
 		scanf_s("%i", &n);
