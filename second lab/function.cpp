@@ -86,7 +86,7 @@ float summ_reverse(float(*foo)(int, float, float), float(*previousfoo)(int, floa
 	float previous = 0.0;
 	for (int i = 0; i < number; i++) {
 		previous = previousfoo(i, x, previous);
-		if ((fabs(previous) - (3.4e-34)) < 0) {
+		if ((fabs(previous) - (3.4e-38)) < 0) {
 			previous = fall;
 			k = i;
 			break;
