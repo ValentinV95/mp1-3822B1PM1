@@ -5,57 +5,57 @@
 const int N = 101;
 
 
-double mysin(double x, int ind, double ap){ //ap = a past == a i-1
-    double ai;
-    ai = (-1)*x*x*ap/(2*(double)ind*(2*(double)ind+1));
+float mysin(float x, int ind, float ap){ //ap = a past == a i-1
+    float ai;
+    ai = (-1)*x*x*ap/(2*(float)ind*(2*(float)ind+1));
     return ai;
 }
 
-double mysinR(double x, int ind, double an){
-    double ai;
-    ai = (-an) *(2*ind+2)*(2*(ind+3))/pow(x,2);
+float mysinR(float x, int ind, float an){
+    float ai;
+    ai = (-an) *(2*(float)ind+2)*(2*(float)(ind+3))/pow(x,2);
     return ai;
 }
 
-double mycos(double x, int ind, double ap){ //ap = a past == a i-1
-    double ai;
-    ai = (-1)*x*x*ap/(2*(double)ind*(2*(double)ind-1));
+float mycos(float x, int ind, float ap){ //ap = a past == a i-1
+    float ai;
+    ai = (-1)*x*x*ap/(2*(float)ind*(2*(float)ind-1));
     return ai;
 }
 
-double mycosR(double x, int ind, double an){
-    double ai;
-    ai = (-1) * ((2*(double)ind) + 1)*((2*(double)ind)+2)* an / (x*x);
+float mycosR(float x, int ind, float an){
+    float ai;
+    ai = (-1) * ((2*(float)ind) + 1)*((2*(float)ind)+2)* an / (x*x);
     return ai;
 }
 
-double myexp(double x, int ind, double ap){ //ap = a past == a i-1
-    double ai;
-    ai = x*ap/(double)ind;
+float myexp(float x, int ind, float ap){ //ap = a past == a i-1
+    float ai;
+    ai = x*ap/(float)ind;
     return ai;
 }
 
-double myexpR(double x, int ind, double an){
-    double ai;
-    ai = (double)(ind+1)*an/x;
+float myexpR(float x, int ind, float an){
+    float ai;
+    ai = (float)(ind+1)*an/x;
     return ai;
 }
 
-double myln(double x, int ind, double ap){ //ap = a past == a i-1
-    double ai;
-    ai = (-1)* x*(double)ind*ap/(double)(ind+1);
+float myln(float x, int ind, float ap){ //ap = a past == a i-1
+    float ai;
+    ai = (-1)* x*(float)ind*ap/(float)(ind+1);
     return ai;
 }
 
-double mylnR(double x, int ind, double an){
-    double ai;
-    ai = (-1) * (double)(ind+1)* an/ (double)(ind)*x;
+float mylnR(float x, int ind, float an){
+    float ai;
+    ai = (-1) * (float)(ind+1)* an/ (float)(ind)*x;
     return ai;
 }
 
-double sumstr(double (*anything)(double, int, double), double x, double ap){
-    double s = ap;
-    double ai;
+float sumstr(float (*anything)(float, int, float), float x, float ap){
+    float s = ap;
+    float ai;
     for (int i = 1; i < N;i++){
        ai = anything(x, i, ap);
        ap = ai;
@@ -64,13 +64,13 @@ double sumstr(double (*anything)(double, int, double), double x, double ap){
     return s;
 }
 
-double sumback(double (*revers)(double, int, double), double (*straight)(double, int, double), double x, double ap){
-    double ai;
-    double an;
+float sumback(float (*revers)(float, int, float), float (*straight)(float, int, float), float x, float ap){
+    float ai;
+    float an;
     int ind_a;
     for (int i = 1; i < N;i++){
         ai = straight(x, i, ap);
-        if (fabs(ai) - pow(10, -38) < 0){
+        if (fabsf(ai) - pow(10, -38) < 0){
             break;
         }
         else{
@@ -80,7 +80,7 @@ double sumback(double (*revers)(double, int, double), double (*straight)(double,
         ap = ai;
     }
 
-    double s = an;
+    float s = an;
     for (int i = ind_a-1; i > 0; i--){
         ai = revers(x, i, an);
         an = ai;
@@ -90,64 +90,63 @@ double sumback(double (*revers)(double, int, double), double (*straight)(double,
 }
 
 int main() {
-    double sin0, cos0, exp0, ln0, x, sinl, cosl, expl, lnl;
+    float sin0, cos0, exp0, ln0, x, sinl, cosl, expl, lnl;
     int c; //choice
     printf("Which fun you want to use?\n1.sin(x)\n2.cos(x)\n3.exp(x)\n4.ln(x)\n");
     scanf("%d", &c);
     printf("Enter x: ");
-    scanf("%lf", &x);
+    scanf("%f", &x);
     sin0 = x;
     cos0 = 1;
     exp0 = 1;
     ln0 = x;
-    double err1;
-    double err2;
+    float err1;
+    float err2;
     switch (c) {
         case 1:
             if(x == 0){
-                x = 2*M_PI;
+                x = 2*(float)M_PI;
             }
-            double sin1 = sumstr(mysin, x, sin0);
-            double sin2 = sumback(mysinR,mysin, x,  sin0) + sin0;
-            printf("sin1 = %lf\n", sin1 );
-            printf("sin2 = %lf\n", sin2);
-            err1 = fabs(sin(x) - sin1)/ fabs(sin(x));
-            err2 = fabs(sin(x) - sin2)/ fabs(sin(x));
+            float sin1 = sumstr(mysin, x, sin0);
+            float sin2 = sumback(mysinR,mysin, x,  sin0) + sin0;
+            printf("sin1 = %f\n", sin1 );
+            printf("sin2 = %f\n", sin2);
+            err1 = fabsf(sinf(x) - sin1)/ fabsf(sinf(x));
+            err2 = fabsf(sinf(x) - sin2)/ fabsf(sinf(x));
             break;
         case 2:
-            if(x == 0){
-                x = 2*M_PI;
+            if(x == 0) {
+                x = 2 * (float)M_PI;
             }
-            double cos1 = sumstr(mycos, x, cos0);
-            double cos2 = sumback(mycosR,mycos, x,  cos0)+cos0;
-            printf("%lf\n", cos1);
-            printf("%lf\n", cos2);
-            err1 = fabs(cos(x) - cos1)/ fabs(cos(x));
-            err2 = fabs(cos(x) - cos2)/ fabs(cos(x));
+            float cos1 = sumstr(mycos, x, cos0);
+            float cos2 = sumback(mycosR,mycos, x,  cos0)+cos0;
+            printf("%f\n", cos1);
+            printf("%f\n", cos2);
+            fabsf(cosf(x) - cos1) / fabsf(cosf(x));
+            err2 = fabsf(cosf(x) - cos2)/ fabsf(cosf(x));
             break;
         case 3:
             if(x==0){
                 x = 0;
             }
-            double exp1 = sumstr(myexp, x, exp0);
-            double exp2 = sumback (myexpR,myexp, x,  exp0)+exp0;
-            printf("%lf\n", exp1);
-            printf("%lf\n", exp2);
-            err1 = fabs(exp(x) - exp1)/ fabs(exp(x));
-            err2 = fabs(exp(x) - exp1)/ fabs(exp(x));
+            float exp1 = sumstr(myexp, x, exp0);
+            float exp2 = sumback (myexpR,myexp, x,  exp0)+exp0;
+            printf("%f\n", exp1);
+            printf("%f\n", exp2);
+            err1 = fabsf(expf(x) - exp1)/ fabsf(expf(x));
+            err2 = fabsf(expf(x) - exp1)/ fabsf(expf(x));
             break;
         case 4:
             if (x <=0){
                 printf("ERROR!");
                 break;
             }
-            double ln1 = sumstr(myln, x, ln0);
-            double ln2 = sumback(mylnR,myln, x,  ln0)+ln0;
-            printf("%lf\n", ln1);
-            printf("%lf\n", ln2);
-            err1 = fabs(log(x+1) - ln1)/ fabs(log(x+1));
-            err2 = fabs(log(x+1) - exp1)/ fabs(log(x+1));
+            float ln1 = sumstr(myln, x, ln0);
+            float ln2 = sumback(mylnR,myln, x,  ln0)+ln0;
+            printf("%f\n", ln1);
+            printf("%f\n", ln2);
+            err1 = fabsf(logf(x+1) - ln1)/ fabsf(logf(x+1));
+            err2 = fabsf(logf(x+1) - ln2)/ fabsf(logf(x+1));
             break;
     }
-
 }
