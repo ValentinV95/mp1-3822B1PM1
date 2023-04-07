@@ -1,4 +1,4 @@
-﻿#include "stdio.h"
+#include "stdio.h"
 #include "math.h"
 #include "locale.h"
 
@@ -12,10 +12,21 @@ double sum(double summa, double(*anyfunc)(double, int, double), double x, double
 	return summa;
 }
 
-double sumo(double summa, double(*anyfunc)(double, int, double), double x, double elem, int n)
+double sumo(double summa, double(*anyfunc)(double, int, double), double x, double elem)
 {
 	summa += elem;
-	for (int i = n-1; i > -1; i--)
+	for (int i = 99; i > -1; i--)
+	{
+		elem = anyfunc(x, i, elem);
+		summa += elem;
+	}
+	return summa;
+}
+
+double sumo_sin(double summa, double(*anyfunc)(double, int, double), double x, double elem, int n)
+{
+	summa += elem;
+	for (int i = n - 1; i > -1; i--)
 	{
 		elem = anyfunc(x, i, elem);
 		summa += elem;
@@ -84,7 +95,7 @@ int main()
 	double x;
 	double sin1 = 0, sin2 = 0, ln1 = 0, ln2 = 0, e1 = 0, e2 = 0, cos1 = 0, cos2 = 0;//под сумму, инициализировать 
 	double elem, tmp=1;//для текущего элемента
-	int i,n=100;
+	int i,n=60;
 	long long int f100, f200, f201;
 
 	setlocale(LC_ALL, "Rus");
@@ -128,30 +139,31 @@ int main()
 
 	//подсчет логарифма
 	elem = - pow(x, 100) / 100;
-	ln2 = sumo(ln2, log2, x, elem,n);
+	ln2 = sumo(ln2, log2, x, elem);
 	printf("Логарифм: %.16lf\n", ln2);
 
 	//подсчет ешки
-	for (i = 1; i < n+1; i++)
+	for (i = 1; i < 101; i++)
 	{
 		tmp = tmp * x / i;
 	}
 	elem = tmp;
-	e2 = sumo(e2, eshka2, x, elem,n);
+	e2 = sumo(e2, eshka2, x, elem);
 	printf("Экспонента: %.16lf\n", e2);	
 
 	//подсчет косинуса
-	for (i = 101; i < 2*n+1; i++)
+	tmp = 1;
+	for (i = 1; i < 2*n+1; i++)
 	{
 		tmp = tmp * x / i;
 	}
 	elem = tmp;
-	cos2 = sumo(cos2, cosinus2, x, elem,n);
+	cos2 = sumo_sin(cos2, cosinus2, x, elem,n);
 	printf("Косинус: %.16lf\n", cos2);
 
 	//подсчет синуса
 	elem = tmp * x / (2*n+1);
-	sin2 = sumo(sin2, sinus2, x, elem,n);
+	sin2 = sumo_sin(sin2, sinus2, x, elem,n);
 	printf("Синус: %.16lf\n", sin2);
 
 	printf("Канонические:\n");
