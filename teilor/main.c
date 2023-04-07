@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define _USE_MATH_DEFINES
 #include <math.h>
-#define M_PI            3.14159265358979323846
+
 const int N = 101;
 
 
@@ -13,7 +14,7 @@ float mysin(float x, int ind, float ap) { //ap = a past == a i-1
 
 float mysinR(float x, int ind, float an) {
     float ai;
-    ai = (-an) * (2 * (float)ind + 2) * (2 * (float)(ind + 3)) / pow(x, 2);
+    ai = (-an) * (2 * (float)ind + 2) * (2 * (float)ind + 3) / pow(x, 2);
     return ai;
 }
 
@@ -105,7 +106,7 @@ int main() {
     switch (c) {
     case 1:
         if (x == 0) {
-            x = 2 * M_PI;
+            x = 2 * (float)M_PI;
         }
         sin1 = sumstr(mysin, x, sin0);
         sin2 = sumback(mysinR, mysin, x, sin0) + sin0;
