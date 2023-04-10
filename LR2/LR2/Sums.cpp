@@ -20,14 +20,14 @@ float sum(float (*slag)(float, float, int), float x, int quan)
 	}
 	return rez;
 }
-float the_last_of_us(float (*slag)(float, float, int), float x, int& quan)
+float the_last_of_us(float (*slag)(float, float, int), float x, int* quan)
 {
 	float prev = 0;
-	for (int i = 1; i <= quan; i++)
+	for (int i = 1; i <= *quan; i++)
 	{
 		if (fabsf(slag(prev, x, i - 1)) <= 1E-8)
 		{
-			quan = i - 1;
+			*quan = i - 1;
 			return prev;
 		}
 		prev = slag(prev, x, i - 1);

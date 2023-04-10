@@ -22,25 +22,25 @@ int main()
 	case 1:
 	{
 		printf("%.10f %.10f \n", sum(slag_sin, x, quan), sin(float(x)));
-		printf("%.10f %.10f \n", r_sum(r_slag_sin, x, the_last_of_us(slag_sin, dx, quan), quan), sin(float(x)));
+		printf("%.10f %.10f \n", r_sum(r_slag_sin, x, the_last_of_us(slag_sin, dx, &quan), quan), sin(float(x)));
 		break;
 	}
 	case 2:
 	{
 		printf("%.10f %.10f \n", sum(slag_cos, x, quan), cos(float(x)));
-		printf("%.10f %.10f \n", r_sum(r_slag_cos, x, the_last_of_us(slag_cos, dx, quan), quan), cos(float(x)));
+		printf("%.10f %.10f \n", r_sum(r_slag_cos, x, the_last_of_us(slag_cos, dx, &quan), quan), cos(float(x)));
 		break;
 	}
 	case 3:
 	{
 		printf("%.10f %.10f \n", sum(slag_ln, x, quan), log(float(x)+1));
-		printf("%.10f %.10f \n", r_sum(r_slag_ln, x, the_last_of_us(slag_ln, dx, quan), quan), log(float(x) + 1));
+		printf("%.10f %.10f \n", r_sum(r_slag_ln, x, the_last_of_us(slag_ln, dx, &quan), quan), log(float(x) + 1.0f));
 		break;
 	}
 	case 4:
 	{
 		printf("%.10f %.10f \n", sum(slag_exp, x, quan), pow(M_E,float(x)));
-		printf("%.10f %.10f \n", r_sum(r_slag_exp, x, the_last_of_us(slag_exp, dx, quan), quan), pow(M_E, float(x)));
+		printf("%.10f %.10f \n", r_sum(r_slag_exp, x, the_last_of_us(slag_exp, dx, &quan), quan), pow(M_E, float(x)));
 	}
 	}
 	return 0;
