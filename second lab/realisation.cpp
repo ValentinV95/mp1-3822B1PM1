@@ -2,10 +2,11 @@
 #include "stdlib.h"
 #include "locale.h"
 #include "prototypes.h"
+#include "math.h"
 
 int main() {
 	setlocale(LC_CTYPE, "RUS");
-	float x, sum;
+	float x, sum, real_sum, error;
 	int number, action;
 
 	printf("Привет пользователь!\n");
@@ -35,42 +36,60 @@ int main() {
 		case 1:
 		{
 			sum = summ(sinup, number, x);
-			printf("%f\n", sum);
+			real_sum = (float)sin(x);
+			printf("mysin = %f\n", sum);
+			printf("sin = %f\n", real_sum);
+			printf("Погрешность = %f\n", fabs(real_sum - sum));
 			printf("=============================================\n");
 			break;
 		}
 		case 2:
 		{
 			sum = summ_reverse(sindown, sinup, number, x);
-			printf("%f\n", sum);
+			real_sum = (float)sin(x);
+			printf("mysin = %f\n", sum);
+			printf("sin = %f\n", real_sum);
+			printf("Погрешность = %f\n", fabs(real_sum - sum));
 			printf("=============================================\n");
 			break;
 		}
 		case 3:
 		{
 			sum = summ(cosup, number, x);
-			printf("%f\n", sum);
+			real_sum = (float)cos(x);
+			printf("mycos = %f\n", sum);
+			printf("cos = %f\n", real_sum);
+			printf("Погрешность = %f\n", fabs(real_sum - sum));
 			printf("=============================================\n");
 			break;
 		}
 		case 4:
 		{
 			sum = summ_reverse(cosdown, cosup, number, x);
-			printf("%f\n", sum);
+			real_sum = (float)cos(x);
+			printf("mycos = %f\n", sum);
+			printf("cos = %f\n", real_sum);
+			printf("Погрешность = %f\n", fabs(real_sum - sum));
 			printf("=============================================\n");
 			break;
 		}
 		case 5:
 		{
 			sum = summ(expup, number, x);
-			printf("%f\n", sum);
+			real_sum = (float)exp(x);
+			printf("myexp = %f\n", sum);
+			printf("exp = %f\n", real_sum);
+			printf("Погрешность = %f\n", fabs(real_sum - sum));
 			printf("=============================================\n");
 			break;
 		}
 		case 6:
 		{
 			sum = summ_reverse(expdown, expup, number, x);
-			printf("%f\n", sum);
+			real_sum = (float)exp(x);
+			printf("myexp = %f\n", sum);
+			printf("exp = %f\n", real_sum);
+			printf("Погрешность = %f\n", fabs(real_sum - sum));
 			printf("=============================================\n");
 			break;
 		}
@@ -82,7 +101,10 @@ int main() {
 				scanf_s("%f", &x);
 			}
 			sum = summ(lnup, number, x);
-			printf("%f\n", sum);
+			real_sum = (float)log(x+1);
+			printf("myln = %f\n", sum);
+			printf("ln = %f\n", real_sum);
+			printf("Погрешность = %f\n", fabs(real_sum - sum));
 			printf("=============================================\n");
 			break;
 		}
@@ -94,7 +116,10 @@ int main() {
 				scanf_s("%f", &x);
 			}
 			sum = summ_reverse(lndown, lnup, number, x);
-			printf("%f\n", sum);
+			real_sum = (float)log(x + 1);
+			printf("myln = %f\n", sum);
+			printf("ln = %f\n", real_sum);
+			printf("Погрешность = %f\n", fabs(real_sum - sum));
 			printf("=============================================\n");
 			break;
 		}
