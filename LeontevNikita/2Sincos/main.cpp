@@ -40,7 +40,7 @@ int main() {
 			continue;
 		}
 		printf_s("Прямой: %.32f\nОбратный: %.32f\nВстроенный: %.32lf (double)\n", out1, out2, out3);
-		printf("Откл. прямой: %.32lf\nОткл. обратной: %.32lf\n", (double)out1 - out3, (double)out2 - out3);
+		printf_s("Откл. прямой: %.32lf\nОткл. обратной: %.32lf\n", (double)out1 - out3, (double)out2 - out3);
 	}
 	//for (int i = -20; i < 201; i++) {
 	//	//arg = PI * i / 180.0f;
