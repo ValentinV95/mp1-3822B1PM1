@@ -119,36 +119,36 @@ int main()
 	printf("4 - e^x\n ");
 	scanf_s("%d", &k);
 	printf("Введите число, от которого хотите взять функцию\n ");
-	scanf_s("%lf", &x);
+	scanf_s("%f", &x);
 	printf("Ввeдите номер слагаемого, до которого будете считать\n ");
 	scanf_s("%d", &o);
 	if (k == 1)
 	{
-		printf("%lf ", smfn(x, o, sinslg));
+		printf("%f ", smfn(x, o, sinslg));
 		last = lastslg(x, o, sinslg);
-		printf("%lf ", smfnrev(x, o, sinslgrev, last));
-		printf("%lf ", sin(x));
+		printf("%f ", smfnrev(x, o, sinslgrev, last));
+		printf("%f ", sin(x));
 	}
 	if (k == 2)
 	{
-		printf("%lf ", smfn(x, o, cosslg));
+		printf("%f ", smfn(x, o, cosslg));
 		last = lastslg(x, o, cosslg);
-		printf("%lf ", smfnrev(x, o, cosslgrev, last));
-		printf("%lf ", cos(x));
+		printf("%f ", smfnrev(x, o, cosslgrev, last));
+		printf("%f ", cos(x));
 	}
 	if (k == 3)
 	{
-		printf("%lf ", smfn(x, o, lnslg));
+		printf("%f ", smfn(x, o, lnslg));
 		last = lastslg(x, o, lnslg);
-		printf("%lf ", smfnrev(x, o, lnslgrev, last));
-		printf("%lf ", log(x + 1));
+		printf("%f ", smfnrev(x, o, lnslgrev, last));
+		printf("%f ", log(x + 1));
 	}
 	if (k == 4)
 	{
-		printf("%lf ", smfn(x, o, expslg));
+		printf("%f ", smfn(x, o, expslg));
 		last = lastslg(x, o, expslg);
-		printf("%lf ", smfnrev(x, o, expslgrev, last));
-		printf("%lf ", exp(x));
+		printf("%f ", smfnrev(x, o, expslgrev, last));
+		printf("%f ", exp(x));
 	}
 	
 }
