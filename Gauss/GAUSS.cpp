@@ -53,7 +53,7 @@ public:
             cout << "\n";
         }
     }
-};
+}
 
 template<typename T>
 class vec {
