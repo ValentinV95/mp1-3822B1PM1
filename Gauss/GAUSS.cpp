@@ -34,7 +34,6 @@ public:
         }
     }
 
-
     void set_matrix(int _n) {
         n = _n;
         for (int i = 0; i < n; i++) {
@@ -42,7 +41,7 @@ public:
                 cin >> arr[i][j];
             }
         }
-    };
+    }
 
     void get_matrix(int _n) {
         n = _n;
@@ -53,7 +52,7 @@ public:
             cout << "\n";
         }
     }
-}
+};
 
 template<typename T>
 class vec {
@@ -178,9 +177,9 @@ void solver(int n) {
             }
             divid = A(i, column) / A(ind_max, column);
             for (int j = column; j < n; j++) {
-                if (A(i, j) != 0) {
+                //if (A(i, j) != 0) {
                     A(i, j) -= A(ind_max, j) * divid;
-                }
+               // }
             }
             B[i] -= B[ind_max] * divid;
         }
