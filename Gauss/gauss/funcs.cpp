@@ -66,18 +66,18 @@ void solver(int n){
     T eps = 10e-16;
     matrix <T> A(n);
     vec <T> B (n);
-    vec <T> used (n); //массив строк, которые уже использовались в i-ых столбцах
+    vec <T> used (n); //Г¬Г Г±Г±ГЁГў Г±ГІГ°Г®ГЄ, ГЄГ®ГІГ®Г°Г»ГҐ ГіГ¦ГҐ ГЁГ±ГЇГ®Г«ГјГ§Г®ГўГ Г«ГЁГ±Гј Гў i-Г»Гµ Г±ГІГ®Г«ГЎГ¶Г Гµ
     cout << "Enter A:\n";
     A.set_matrix(n);
     cout << "Enter B:\n";
     B.set_vec(n);
-    int ind_max; //индекс максимального
+    int ind_max; //ГЁГ­Г¤ГҐГЄГ± Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­Г®ГЈГ®
     T divid;
 
     for (int column = 0; column < n; column++){
         ind_max = search_max(n, column, A, used);
         if (abs(A(ind_max, column)) - eps < 0){
-            used[column] = -1; //то есть все строки в этом столбце равны нулю (лин.зависимые есть)
+            used[column] = -1; //ГІГ® ГҐГ±ГІГј ГўГ±ГҐ Г±ГІГ°Г®ГЄГЁ Гў ГЅГІГ®Г¬ Г±ГІГ®Г«ГЎГ¶ГҐ Г°Г ГўГ­Г» Г­ГіГ«Гѕ (Г«ГЁГ­.Г§Г ГўГЁГ±ГЁГ¬Г»ГҐ ГҐГ±ГІГј)
             continue;
         }
         used[column] = ind_max;
@@ -87,9 +87,9 @@ void solver(int n){
             }
             divid = A(i,column)/A(ind_max, column);
             for (int j = column; j < n; j++){
-                if (A(i,j)!= 0){
+                //if (A(i,j)!= 0){
                     A(i,j) -= A(ind_max, j)*divid;
-                }
+                //}
             }
             B[i]-= B[ind_max]*divid;
         }
@@ -112,7 +112,7 @@ void solver(int n){
     }
 
 
-    if (!was_using(-1, n,used)){  //если не было зависимых строк
+    if (!was_using(-1, n,used)){  //ГҐГ±Г«ГЁ Г­ГҐ ГЎГ»Г«Г® Г§Г ГўГЁГ±ГЁГ¬Г»Гµ Г±ГІГ°Г®ГЄ
         cout << "\n\n\n Result:\n";
         for (int column = 0; column < n; column++){
             ind_max = search_max_for_result(n, column, A);
@@ -122,26 +122,26 @@ void solver(int n){
     }
 
 
-    else{                               //если есть зависимые строки
+    else{                               //ГҐГ±Г«ГЁ ГҐГ±ГІГј Г§Г ГўГЁГ±ГЁГ¬Г»ГҐ Г±ГІГ°Г®ГЄГЁ
         cout << "\n\n\n Result:\n";
         for (int column = 0; column < n; column++){
             if (used[column] != -1){
                 ind_max = search_max_for_result(n, column, A);
                 divid = A(ind_max, column);
                 B[ind_max] /= divid;
-                for (int j = 0; j < n;j++){ //привожу к единичной левую часть
+                for (int j = 0; j < n;j++){ //ГЇГ°ГЁГўГ®Г¦Гі ГЄ ГҐГ¤ГЁГ­ГЁГ·Г­Г®Г© Г«ГҐГўГіГѕ Г·Г Г±ГІГј
                     A(ind_max, j)/= divid;
                 }
             }
         }
         int c = 0;
-        for (int i = 0; i < n; i++){ //счетчик линейно зависимых (впоследствии нулевых) строк (количество параметров)
+        for (int i = 0; i < n; i++){ //Г±Г·ГҐГІГ·ГЁГЄ Г«ГЁГ­ГҐГ©Г­Г® Г§Г ГўГЁГ±ГЁГ¬Г»Гµ (ГўГЇГ®Г±Г«ГҐГ¤Г±ГІГўГЁГЁ Г­ГіГ«ГҐГўГ»Гµ) Г±ГІГ°Г®ГЄ (ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ Г°Г Г¬ГҐГІГ°Г®Гў)
             if (used[i] == -1){
                 c++;
             }
         }
         for (int i = 0; i < n;i++){
-            if (is_null(n,i ,A)){ // проверка на нулевую строку
+            if (is_null(n,i ,A)){ // ГЇГ°Г®ГўГҐГ°ГЄГ  Г­Г  Г­ГіГ«ГҐГўГіГѕ Г±ГІГ°Г®ГЄГі
                 continue;
             }
             for (int j = 0; j < n - c;j++){
