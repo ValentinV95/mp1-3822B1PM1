@@ -18,12 +18,15 @@
     <ClCompile Include="MAIN.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HEADER.h">
+    <ClInclude Include="H_vec.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="H_matrix.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="H_solver.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
