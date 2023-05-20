@@ -12,7 +12,7 @@ public:
 	}
 	~matrix() {
 		m = 0, n = 0;
-		delete mas;
+		delete[] mas;
 	}
 };
 template <class T>
@@ -26,6 +26,6 @@ public:
 	}
 	~vector() {
 		m = 0;
-		delete mas;
+		delete[] mas;
 	}
 };
