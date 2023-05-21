@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 const double MAXV = 100000;
 const double MINV = -100000;
 

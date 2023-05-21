@@ -1,4 +1,10 @@
+#include <iostream>
+#include <chrono>
+#include <iomanip>
 #include "menu.cpp"
+#include "solver.h"
+#include "vector.h"
+#include "matrix.h"
 
 const bool flag = 0; //menu.cpp std::cout   0 - minimal info about solution, 1 - maximal info
 const bool flag2 = 1; //show time 0 - off, 1 - on

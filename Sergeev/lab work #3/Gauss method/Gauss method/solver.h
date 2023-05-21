@@ -1,12 +1,9 @@
 #pragma once
-#include <iostream>
-#include <chrono>
-#include <iomanip>
 #include "vector.h"
 #include "matrix.h"
+#include <iostream>
 
 const double EPS = 1.0E-30;
-const double EPS2 = 0.001;
 
 template <class T>
 class solver
@@ -107,23 +104,6 @@ public:
         }
 
         return 0;
-    }
-    void check(matrix<T>& matr, vector<T>& vec)// matrix(matr) * vector(v) & compare result with other vector(vec)
-    {
-        if (matr.get_size() != vec.get_size()) throw "not equal sizes";
-        if (matr.get_size() != size) throw "not equal sizes";
-
-        int size = matr.get_size();
-
-        vector<T> tmp(size), temp(size);
-
-        #pragma omp parallel for
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++)
-                tmp[i] += v[j] * matr[i * size + j];
-
-        temp = tmp - vec;
-        std::cout << std::setprecision(16) << temp;
     }
     vector<T>& get_v() 
     {

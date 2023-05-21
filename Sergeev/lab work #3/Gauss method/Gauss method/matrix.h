@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 const double MAXM = 100000;
 const double MINM = -100000;
 
@@ -98,4 +100,19 @@ std::ostream& operator<< (std::ostream& out, matrix<T>& m)
         out << "\n";
     }
     return out;
+}
+
+template <class T>
+vector<T> mult(vector<T>& v, matrix<T>& m)
+{
+    int size = v.get_size();
+    if (size != m.get_size()) throw "not equal sizes";
+
+    vector<T> vec(size);
+
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size; j++)
+            vec[i] += m[i * size + j] * v[j];
+
+    return vec;
 }
