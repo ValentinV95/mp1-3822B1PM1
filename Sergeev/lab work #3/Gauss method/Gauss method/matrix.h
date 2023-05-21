@@ -1,4 +1,6 @@
 #pragma once
+const double MAXM = 100000;
+const double MINM = -100000;
 
 template <class T>
 class matrix
@@ -12,7 +14,8 @@ public:
     {
         size = _size;
         arr = new T[size * size];
-#pragma omp parallel for
+
+        #pragma omp parallel for
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
                 arr[i * size + j] = static_cast<T>(0.0);
@@ -29,13 +32,12 @@ public:
     }
     void fill(int mod)//auto-random or manual filling matrix (MAX & MIN in vector.h)   
     {
-        T max = static_cast<T>(MAX), min = static_cast<T>(MIN);
         if (mod)
         {
             //"#pragma omp parallel for" will fill matrix equal rows
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
-                    arr[i * size + j] = static_cast<T>((static_cast<double>(rand()) / static_cast<double>(RAND_MAX)) * (MAX - MIN) + MIN);
+                    arr[i * size + j] = static_cast<T>((static_cast<double>(rand()) / static_cast<double>(RAND_MAX)) * (MAXM - MINM) + MINM);
         }
         else
         {
@@ -52,10 +54,11 @@ public:
     {
         if (size == _m.get_size())
         {
-#pragma omp parallel for
+            #pragma omp parallel for
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                     arr[i * size + j] = _m[i * size + j];
+
             return *this;
         }
         else throw "not equal sizes";
@@ -64,10 +67,11 @@ public:
     {
         if (size == _m.get_size())
         {
-#pragma omp parallel for
+            #pragma omp parallel for
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                     arr[i * size + j] = _m[i * size + j];
+
             return *this;
         }
         else throw "not equal sizes";
@@ -90,6 +94,7 @@ std::ostream& operator<< (std::ostream& out, matrix<T>& m)
     {
         for (int j = 0; j < m.get_size(); j++)
             out << m[i * m.get_size() + j] << " ";
+
         out << "\n";
     }
     return out;

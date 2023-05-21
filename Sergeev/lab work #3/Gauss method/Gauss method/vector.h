@@ -1,7 +1,6 @@
 #pragma once
-
-static double MAX = 100000;
-static double MIN = -100000;
+const double MAXV = 100000;
+const double MINV = -100000;
 
 template <class T>
 class vector
@@ -14,6 +13,7 @@ public:
     {
         size = _size;
         arr = new T[size];
+
         for (int i = 0; i < size; i++)
             arr[i] = static_cast<T>(0.0);
     }
@@ -36,7 +36,7 @@ public:
         if (mod)
         {
             for (int i = 0; i < size; i++)
-                arr[i] = static_cast<T>((static_cast<double>(rand()) / static_cast<double>(RAND_MAX)) * (MAX - MIN) + MIN);
+                arr[i] = static_cast<T>((static_cast<double>(rand()) / static_cast<double>(RAND_MAX)) * (MAXV - MINV) + MINV);
         }
         else
         {
@@ -55,6 +55,7 @@ public:
     vector& operator=(vector& _v)
     {
         if (size != _v.get_size()) throw "not equal sizes";
+
         for (int i = 0; i < size; i++)
             arr[i] = _v[i];
         return *this;
@@ -62,6 +63,7 @@ public:
     vector& operator=(const vector& _v)
     {
         if (size != _v.get_size()) throw "not equal sizes";
+
         for (int i = 0; i < size; i++)
             arr[i] = _v[i];
         return *this;
@@ -69,9 +71,12 @@ public:
     vector operator-(vector& _v)
     {
         if (size != _v.get_size()) throw "not equal sizes";
+
         vector<T> res(size);
+
         for (int i = 0; i < size; i++)
             res[i] = arr[i] - _v[i];
+
         return res;
     }
 };
@@ -81,6 +86,7 @@ std::istream& operator>> (std::istream& in, vector<T>& v)
 {
     for (int i = 0; i < v.get_size(); i++)
         in >> v[i];
+
     return in;
 }
 
@@ -89,5 +95,6 @@ std::ostream& operator<< (std::ostream& out, vector<T>& v)
 {
     for (int i = 0; i < v.get_size(); i++)
         out << v[i] << "\n";
+
     return out;
 }
