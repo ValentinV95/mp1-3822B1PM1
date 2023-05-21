@@ -6,8 +6,8 @@
 #include "vector.h"
 #include "matrix.h"
 
-const bool flag = 0; //menu.cpp std::cout   0 - minimal info about solution, 1 - maximal info
-const bool flag2 = 1; //show time 0 - off, 1 - on
+const bool flag = 0; //0 - minimal info about solution, 1 - maximal info
+const bool flag2 = 1; //show solution time: 0 - off, 1 - on
 
 int main()
 {
