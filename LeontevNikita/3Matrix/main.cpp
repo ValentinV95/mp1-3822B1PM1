@@ -15,10 +15,10 @@ int main() {
 	file.open("log.txt");
 	while (true) {
 		Matrix<INP> m1 = mainchoice();
-		Matrix<INP> m2(0, 0);
-		//Matrix<INP> m2 = mainchoice();
-		m2 = (INP)1 / m1;
-		//m2 = m1 * m2;
+		Matrix<INP> m2(0, 0); // 1
+		//Matrix<INP> m2 = mainchoice(); // 2
+		m2 = (INP)1 / m1; // 1
+		//m2 = m1 * m2; // 2
 		m1.show(file);
 		file << "\n...\n";
 		m2.show(file);
