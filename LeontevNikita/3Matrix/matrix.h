@@ -31,6 +31,16 @@ public:
 			}
 			coords = c.coords;
 		}
+		else {
+			main = nullptr;
+			coords = 0;
+		}
+	}
+	Vector(Vector &&sec) {
+		main = sec.main;
+		coords = sec.coords;
+		sec.main = nullptr;
+		sec.coords = 0;
 	}
 	T &operator[](size_t i) {
 		if (i < coords) {
@@ -56,6 +66,7 @@ public:
 	Matrix(size_t w, size_t h, size_t right_part = 0, bool one = 0); // w includes right_part
 	Matrix(const T& num);
 	Matrix(const Matrix &c);
+	Matrix(Matrix &&sec);
 	~Matrix() {
 		delete[] isready;
 		delete[] main;
@@ -212,6 +223,28 @@ Matrix<T>::Matrix(const Matrix<T> &c) {
 		addline(&c.main[i][0]);
 		isready[i] = c.isready[i];
 	}
+}
+
+template<typename T>
+Matrix<T>::Matrix(Matrix &&sec) {
+	isready = sec.isready;
+	main = sec.main;
+	solved = sec.solved;
+	width = sec.width;
+	height = sec.lines;
+	right_part = sec.right_part;
+	autozero = sec.autozero;
+	holds = sec.holds;
+	full = sec.full;
+	lines = sec.lines;
+	issolved = sec.issolved;
+	sec.isready = nullptr;
+	sec.main = nullptr;
+	sec.solved = nullptr;
+	sec.width = 0;
+	sec.height = 0;
+	sec.lines = 0;
+	sec.right_part = 0;
 }
 
 template<typename T>
