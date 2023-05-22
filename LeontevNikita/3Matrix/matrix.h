@@ -23,7 +23,7 @@ public:
 	~Vector() {
 		delete[] main;
 	}
-	Vector(const Vector &c) {
+	Vector(const Vector<T> &c) {
 		if (c.coords != 0) {
 			main = new T[c.coords];
 			for (size_t i = 0; i < c.coords; i++) {
@@ -36,7 +36,7 @@ public:
 			coords = 0;
 		}
 	}
-	Vector(Vector &&sec) {
+	Vector(Vector<T> &&sec) {
 		main = sec.main;
 		coords = sec.coords;
 		sec.main = nullptr;
@@ -65,8 +65,8 @@ class Matrix {
 public:
 	Matrix(size_t w, size_t h, size_t right_part = 0, bool one = 0); // w includes right_part
 	Matrix(const T& num);
-	Matrix(const Matrix &c);
-	Matrix(Matrix &&sec);
+	Matrix(const Matrix<T> &c);
+	Matrix(Matrix<T> &&sec);
 	~Matrix() {
 		delete[] isready;
 		delete[] main;
@@ -98,7 +98,7 @@ public:
 		return right_part;
 	}
 	//ops
-	Matrix<T> operator+(const Matrix &sec);
+	Matrix<T> operator+(const Matrix<T> &sec);
 	Matrix<T>& operator=(const Matrix<T> &sec);
 	Matrix<T> operator*(const T& coef);
 	Matrix<T> operator*(Matrix<T> &sec); // n^3
@@ -181,6 +181,7 @@ Matrix<T>::Matrix(size_t w, size_t h, size_t right_part, bool one) {
 		for (size_t j = 1; j < width; j++) {
 			line[j] = 0;
 		}
+		addline(line);
 		for (size_t i = 1; i < height; i++) {
 			line[i - 1] = 0;
 			if (i < width - right_part) {
@@ -225,7 +226,7 @@ Matrix<T>::Matrix(const Matrix<T> &c) {
 }
 
 template<typename T>
-Matrix<T>::Matrix(Matrix &&sec) {
+Matrix<T>::Matrix(Matrix<T> &&sec) {
 	isready = sec.isready;
 	main = sec.main;
 	solved = sec.solved;
