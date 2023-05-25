@@ -1,24 +1,68 @@
 #pragma once
 #include <iostream>
 using namespace std;
-template <typename T>
+template<typename T>
 class matrix {
 private:
-    T** arr;
-    int n; //размерность
+    T **arr;
+    int n; //СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ
 public:
-    matrix(int _n);
+    matrix(int _n) {
+        n = _n;
+        arr = new T *[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = new T[n];
+        }
+    }
 
-    T& operator () (int ind1, int ind2);
+    T &operator()(int ind1, int ind2) {
+        return arr[ind1][ind2];
+    }
 
-    matrix(const matrix <T>& A);
+    matrix(const matrix<T> &A) {
+        n = A.n;
+        arr = new T *[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = new T[n];
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = A.arr[i][j];
+            }
+        }
+    }
 
 
+    void set_matrix(int _n) {
+        n = _n;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                cin >> arr[i][j];
+            }
+        }
+    };
 
+    void get_matrix(int _n) {
+        n = _n;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                cout << arr[i][j] << " ";
+            }
+            cout << "\n";
+        }
+    }
 
-    void set_matrix(int _n);
-
-    void get_matrix(int _n);
-
-    ~matrix();
+    ~matrix(){
+        for (int i = 0; i < n;i++){
+            delete[] arr[i];
+        }
+        delete[] arr;
+        n = 0;
+    }
 };
+
+
+
+
+
