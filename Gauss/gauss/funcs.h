@@ -63,7 +63,7 @@ bool is_null(int n, int ind, matrix<T> &A) {
 
 template<typename T>
 void solver(int n) {
-    T eps = 10e-16;
+    T eps = 10e-15;
     matrix<T> A(n);
     vec<T> B(n);
     vec<T> used(n); //массив строк, которые уже использовались в i-ых столбцах
@@ -106,7 +106,12 @@ void solver(int n) {
     cout << "\n\n\n";
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            cout << A(i, j) << "\t";
+            if(A(i,j) -  eps < 0){
+                cout << "0\t";
+            }
+            else{
+                cout << A(i, j) << "\t";
+            }
         }
         cout << "\t" << " | " << B[i] << "\n";
     }
