@@ -1,6 +1,5 @@
 ﻿#include <iostream>
 #include <exception>
-#include <stdexcept>
 #include "vector_matrix.h"
 #include "Gauss_solver.h"
 
@@ -61,8 +60,8 @@ int main()
 			}
 			break;
 		
-		}//case2
-		}//switch
+		}
+		}
 
 	}
 	catch (std::exception& e) {
