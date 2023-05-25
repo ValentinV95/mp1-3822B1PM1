@@ -61,7 +61,7 @@ public:
 
     int solution() //solving Ax=b (mx=v) //2 - det=0 & no solutions, 1 - det=0 & infinity solutions, 0 - the only one solution (v) 
     {
-        bool flag = false;
+        bool flag = false;  //presence of zero-row in matrix
         for (int i = 0; i < size; i++)
         {
             bool flag2 = true;
@@ -94,9 +94,9 @@ public:
                     m[i * size + k] /= m[i * size + i];
             }
         }
-        if (flag)
+        if (flag)//if zero-row in matrix  
         {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; i++)// if every zero-row in matrix A is zero-row in matrix|vector A|b
             {
                 if ((std::abs(static_cast<double>(m[i * size + i])) < EPS) && (std::abs(static_cast<double>(v[i])) > EPS)) return 2;
             }

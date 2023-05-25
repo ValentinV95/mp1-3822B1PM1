@@ -58,6 +58,7 @@ void menu(bool flag, bool flag2)
         std::cout << "det = 0 & infinity solutions\n";
         if (flag)
         {
+            std::cout << "one of these\n";
             std::cout << res;
             vector<T> diff(size);
             diff = mult(res, mat) - vec;
