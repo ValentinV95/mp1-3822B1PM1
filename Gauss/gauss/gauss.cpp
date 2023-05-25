@@ -1,8 +1,9 @@
-﻿#include <iostream>
-#include "vector.h"
+#include <iostream>
 #include "funcs.h"
-using namespace std;
+#include "matrix.h"
+#include "vec.h"
 
+using namespace std;
 
 int main() {
     int choice;
@@ -12,18 +13,14 @@ int main() {
     cout << "Enter size: ";
     cin >> n;
     switch (choice) {
-    case 1:
-        solver<double>(n);
-        break;
-    case 2:
-        solver<float>(n);
-        break;
-    case 3:
-        solver<int>(n);
-        break;
-    default:
-        solver<double>(n);
-        break;
+        case 1:
+            solver<double>(n);
+            break;
+        case 2:
+            solver<float>(n);
+            break;
+        default:
+            return 0;
     }
-    return 0;
+
 }
