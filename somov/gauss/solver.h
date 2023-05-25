@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 #include "matrix.h"
 #include "vector.h"
@@ -52,7 +52,7 @@ void Solver::check(const Matrix<T>& m, const Vector<T>& x, const Vector<T>& b)
 		for (size_t j = 0; j < m.getWidth(); j++)
 			res += m.get(i, j) * x[j];
 
-		std::cout << "Разница между результатом вычисления строки " << i << " и строки вектора коэффициентов: " << (res - b[i]) << std::endl;
+		std::cout << "Р Р°Р·РЅРёС†Р° РјРµР¶РґСѓ СЂРµР·СѓР»СЊС‚Р°С‚РѕРј РІС‹С‡РёСЃР»РµРЅРёСЏ СЃС‚СЂРѕРєРё " << i << " Рё СЃС‚СЂРѕРєРё РІРµРєС‚РѕСЂР° РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ: " << (res - b[i]) << std::endl;
 	}
 }
 
@@ -83,7 +83,7 @@ void Solver::getMax(T& lead, const Matrix<T>& m, size_t pos)
 		}
 }
 
-// Считаем ранг матрицы системы и расширенной матрицы, чтобы проверить систему на совместность
+// РЎС‡РёС‚Р°РµРј СЂР°РЅРі РјР°С‚СЂРёС†С‹ СЃРёСЃС‚РµРјС‹ Рё СЂР°СЃС€РёСЂРµРЅРЅРѕР№ РјР°С‚СЂРёС†С‹, С‡С‚РѕР±С‹ РїСЂРѕРІРµСЂРёС‚СЊ СЃРёСЃС‚РµРјСѓ РЅР° СЃРѕРІРјРµСЃС‚РЅРѕСЃС‚СЊ
 template<class T>
 bool Solver::checkCompatibility(const Matrix<T>& m, const Vector<T>& b)
 {
@@ -121,7 +121,7 @@ bool Solver::checkCompatibility(const Matrix<T>& m, const Vector<T>& b)
 		(false);
 }
 
-// Переход к треугольному виду
+// РџРµСЂРµС…РѕРґ Рє С‚СЂРµСѓРіРѕР»СЊРЅРѕРјСѓ РІРёРґСѓ
 template<class T>
 void Solver::toTriangle(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 {
@@ -156,7 +156,7 @@ void Solver::toTriangle(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 	proc_row = 0;
 }
 
-// Переход от треугольного вида к простейшему
+// РџРµСЂРµС…РѕРґ РѕС‚ С‚СЂРµСѓРіРѕР»СЊРЅРѕРіРѕ РІРёРґР° Рє РїСЂРѕСЃС‚РµР№С€РµРјСѓ
 template<class T>
 void Solver::toRowForm(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 {
@@ -202,7 +202,7 @@ void Solver::toRowForm(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 	}
 }
 
-// Заполняем столбец иксов
+// Р—Р°РїРѕР»РЅСЏРµРј СЃС‚РѕР»Р±РµС† РёРєСЃРѕРІ
 template<class T>
 void Solver::fillX(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 {
