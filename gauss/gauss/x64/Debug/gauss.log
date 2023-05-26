@@ -1,0 +1,9 @@
+﻿  funcs.cpp
+  gauss.cpp
+  matrix.cpp
+  vector.cpp
+  Создание кода...
+gauss.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl solver<double>(int)" (??$solver@N@@YAXH@Z) в функции main.
+gauss.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl solver<float>(int)" (??$solver@M@@YAXH@Z) в функции main.
+gauss.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl solver<int>(int)" (??$solver@H@@YAXH@Z) в функции main.
+C:\Users\pitza\source\repos\gauss\x64\Debug\main.exe : fatal error LNK1120: неразрешенных внешних элементов: 3
