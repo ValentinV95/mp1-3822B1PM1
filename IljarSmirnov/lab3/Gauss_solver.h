@@ -23,7 +23,7 @@ public:
 			U maxel = A.mas[i * A.n + i];
 			int maxs = i;
 			for (int j = 0; j < A.n - i; j++) {
-				if (A.mas[A.n * (i + j) + i] > maxel) {
+				if (abs(A.mas[A.n * (i + j) + i]) > maxel) {
 					maxel = A.mas[A.n * (i + j) + i];
 					maxs = i + j;
 				}
@@ -34,7 +34,7 @@ public:
 					continue;
 				}
 				else {
-					throw std::logic_error("Решений не сушествует");
+					throw std::logic_error("ГђГҐГёГҐГ­ГЁГ© Г­ГҐ Г±ГіГёГҐГ±ГІГўГіГҐГІ");
 				}
 
 			}
