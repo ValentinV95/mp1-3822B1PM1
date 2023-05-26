@@ -6,6 +6,7 @@ template <class T>
 class Solver {
 public:
 	void Gaus(Matrix<T>& A, Vector<T>& b, Vector<T>& x) {
+		double eps =std::pow(10, -6);
 		for (int i = 0; i < A.GetM(); i++) {
 			T largest_el = A.GetValue(i, i);
 			int m_largest = i;
@@ -14,6 +15,10 @@ public:
 					largest_el = A.GetValue(j, i);
 					m_largest = j;
 				}
+			}
+
+			if (std::abs(largest_el) < eps) {
+				throw std::exception("СЛОУ имеет бусконечно много решений");
 			}
 
 			if (largest_el != 0) {
@@ -26,6 +31,7 @@ public:
 				}
 				b.SetValue(i, b.GetValue(i) / divider);
 			}
+			
 			
 			for (int j = 0; j < A.GetM(); j++) {
 				T mult = A.GetValue(j, i);//mnozhitel
