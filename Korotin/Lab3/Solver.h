@@ -63,18 +63,34 @@ public:
 
 template <typename T>
 void Linear_system(int size) {
-    Matrix<float> A(size);
-    Vec<float> b(size);
-    Solver<float> solve;
-    Vec<float> X;
+    int choose=1;
+    Matrix<T> A(size);
+    Vec<T> b(size);
+    Solver<T> solve;
+    Vec<T> X;
+    setlocale(LC_ALL, "Russian");
     system("cls");
-    std::cout << "Введите элементы матрицы (по строкам):" << std::endl;
-    std::cin >> A;
-    std::cout << A << std::endl;
-    std::cout << "Введите элементы вектора:" << std::endl;
-    std::cin >> b;
-    std::cout << b << std::endl;
+    do {
+        if ((choose != 1) && (choose != 2)) {
+            system("cls");
+            std::cout << "Выбранного вами варианта не существует, попробуйте ещё раз" << std::endl;
+        }
+        std::cout << "Выберите, как вы хотите ввести элементы матрицы и вектора:" << std::endl << "1.Самостоятельно" << std::endl << "2.Ввести случайные элементы" << std::endl;
+        std::cin >> choose;
+    } while ((choose != 1) && (choose != 2));
+    if (choose == 1) {
+        std::cout << "Введите элементы матрицы (по строкам):" << std::endl;
+        std::cin >> A;
+        std::cout << A << std::endl;
+        std::cout << "Введите элементы вектора:" << std::endl;
+        std::cin >> b;
+    }
+    else {
+        for (int i = 0; i < size * size; ++i) A[i] = ((T)rand())/100;
+        for (int i = 0; i < size; ++i) b[i] = ((T)rand()) / 100;
+    }
     system("cls");
+    std::cout << "Введённая матрица:" << std::endl << A << "Введённый вектор:" << std::endl << b << std::endl;
     X = solve.Gauss(A, b);
-    std::cout << X << std::endl;
+    std::cout<< "Результат:" << std::endl << X << std::endl;
 }

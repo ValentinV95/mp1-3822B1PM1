@@ -5,6 +5,7 @@ int main()
     int choose=1, size=1, choose2=0;
     setlocale(LC_ALL, "Russian");
     do {
+        system("cls");
         do {
             if ((choose != 1) && (choose != 2)) {
                 system("cls");
