@@ -81,6 +81,15 @@ public:
 
         return res;
     }
+    vector& operator-=(vector& _v)
+    {
+        if (size != _v.get_size()) throw "not equal sizes";
+
+        for (int i = 0; i < size; i++)
+            arr[i] -= _v[i];
+
+        return *this;
+    }
 };
 
 template <class T>

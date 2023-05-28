@@ -48,7 +48,7 @@ void menu(bool flag, bool flag2)
         {
             std::cout << res;
             vector<T> diff(size);
-            diff = mult(res, mat) - vec;
+            diff = (mat * res) - vec;
             std::cout << "precision: Ax-b\n";
             std::cout << std::setprecision(12) << diff;
         }
@@ -61,7 +61,7 @@ void menu(bool flag, bool flag2)
             std::cout << "one of these\n";
             std::cout << res;
             vector<T> diff(size);
-            diff = mult(res, mat) - vec;
+            diff = (mat * res) - vec;
             std::cout << "precision: Ax-b\n";
             std::cout << std::setprecision(12) << diff;
         }

@@ -103,16 +103,15 @@ std::ostream& operator<< (std::ostream& out, matrix<T>& m)
 }
 
 template <class T>
-vector<T> mult(vector<T>& v, matrix<T>& m)
+vector<T> operator*(matrix<T>& _m, vector<T>& _v)
 {
-    int size = v.get_size();
-    if (size != m.get_size()) throw "not equal sizes";
+    int size = _v.get_size();
+    if (size != _m.get_size()) throw "not equal sizes";
 
     vector<T> vec(size);
-
     for (int i = 0; i < size; i++)
         for (int j = 0; j < size; j++)
-            vec[i] += m[i * size + j] * v[j];
+            vec[i] += _m[i * size + j] * _v[j];
 
     return vec;
 }
