@@ -4,7 +4,7 @@
 #include "menu.h"
 #include "solver.h"
 #include "vector.h"
-#include "matrix.h"
+#include "square_matrix.h"
 
 const bool flag = 0; //0 - minimal info about solution, 1 - maximal info
 const bool flag2 = 1; //show solution time: 0 - off, 1 - on

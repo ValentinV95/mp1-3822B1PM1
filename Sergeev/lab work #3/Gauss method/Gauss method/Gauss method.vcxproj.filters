@@ -23,7 +23,7 @@
     <ClInclude Include="vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="matrix.h">
+    <ClInclude Include="square_matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="solver.h">

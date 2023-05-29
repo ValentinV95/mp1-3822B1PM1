@@ -3,7 +3,7 @@
 #include <iomanip>
 #include "solver.h"
 #include "vector.h"
-#include "matrix.h"
+#include "square_matrix.h"
 
 template<class T>
 void menu(bool flag, bool flag2)
@@ -16,7 +16,7 @@ void menu(bool flag, bool flag2)
     std::cin >> mod;
 
     vector<T> vec(size), res(size);
-    matrix<T> mat(size);
+    square_matrix<T> mat(size);
 
     if (mod == 0) std::cout << "A\n";
     mat.fill(mod);

@@ -1,6 +1,6 @@
 #pragma once
 #include "vector.h"
-#include "matrix.h"
+#include "square_matrix.h"
 #include <iostream>
 
 const double EPS = 1.0E-30;
@@ -12,11 +12,11 @@ protected:
 
     int size;
     vector<T> v;
-    matrix<T> m;
+    square_matrix<T> m;
 
 public:
 
-    solver(matrix<T>& _m, vector<T>& _v, int _size) : m(_size), v(_size)
+    solver(square_matrix<T>& _m, vector<T>& _v, int _size) : m(_size), v(_size)
     {
         if (_m.get_size() != _v.get_size()) throw "not equal sizes";
         if (_m.get_size() != _size) throw "not equal sizes";
