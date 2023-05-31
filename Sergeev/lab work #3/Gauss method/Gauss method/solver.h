@@ -26,22 +26,44 @@ public:
         v = _v;
     }
 
-    int max(int j) //number of row under j-row with biggest element in j-column
+    int max(int j, bool flag) //return number of row with biggest element in j-column, if this row is under j-row or if (this row above j-row) and (flag = 1) and (contains zeros only in 0,...,j-1 columns)
     {
         int k = j;
         double max = std::abs(static_cast<double>(m[j * size + j]));
+
         for (int i = j + 1; i < size; i++)
         {
             if (max < std::abs(static_cast<double>(m[i * size + j])))
             {
-                max = m[i * size + j];
+                max = static_cast<double>(m[i * size + j]);
                 k = i;
+            }
+        }
+
+        if (flag)
+        {
+            for (int i = 0; i < j; i++)
+            {
+                bool flag=1;
+
+                #pragma omp parallel for
+                for (int s = 0; s < j; s++)
+                    if (static_cast<double>(m[i * size + s]) > EPS) flag = 0;
+
+                if (flag) 
+                {
+                    if (max < std::abs(static_cast<double>(m[i * size + j]))) 
+                    { 
+                        max = static_cast<double>(m[i * size + j]); 
+                        k = i; 
+                    }
+                }
             }
         }
         return k;
     }
 
-    void swap(int i, int j) //swap i-row with j-row
+    void swap(int i, int j) //swap i-row with j-row in matrix and i-element with j-element in vector
     {
         vector<T> tmp(size);
         T temp;
@@ -65,7 +87,8 @@ public:
         for (int i = 0; i < size; i++)
         {
             bool flag2 = true;
-            if (i != max(i)) swap(i, max(i));
+            int tmp = max(i, flag);
+            if (i != tmp) swap(i, tmp);
 
             if (std::abs(static_cast<double>(m[i * size + i])) < EPS) 
             { 

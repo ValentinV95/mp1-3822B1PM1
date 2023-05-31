@@ -36,7 +36,7 @@ public:
     {
         if (mod)
         {
-            //"#pragma omp parallel for" will fill matrix equal rows
+            //#pragma omp parallel for  will fill matrix equal rows
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                     arr[i * size + j] = static_cast<T>((static_cast<double>(rand()) / static_cast<double>(RAND_MAX)) * (MAXM - MINM) + MINM);
