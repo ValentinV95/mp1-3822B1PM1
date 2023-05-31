@@ -44,13 +44,13 @@ public:
         {
             for (int i = 0; i < j; i++)
             {
-                bool flag=1;
+                bool flag1=1;
 
                 #pragma omp parallel for
                 for (int s = 0; s < j; s++)
-                    if (static_cast<double>(m[i * size + s]) > EPS) flag = 0;
+                    if (static_cast<double>(m[i * size + s]) > EPS) flag1 = 0;
 
-                if (flag) 
+                if (flag1) 
                 {
                     if (max < std::abs(static_cast<double>(m[i * size + j]))) 
                     { 
