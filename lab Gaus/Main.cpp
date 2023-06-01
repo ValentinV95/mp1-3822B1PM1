@@ -3,7 +3,7 @@
 #include "Solver.h"
 #include "Vector.h"
 
-template <typename T>
+template <class T>
 void rand_slou(Matrix<T>& A, Vector<T>& b);
 
 int main() {
@@ -32,6 +32,8 @@ int main() {
 				A.Scan();
 				std::cout << "Введите элементы матрицы b" << std::endl;
 				b.Scan();
+				A.Print();
+				b.Print();
 			}
 			s.Gaus(A, b, x);
 			std::cout << "Ответ" << std::endl;
@@ -52,6 +54,8 @@ int main() {
 				A.Scan();
 				std::cout << "Введите элементы матрицы b" << std::endl;
 				b.Scan();
+				A.Print();
+				b.Print();
 			}
 			s.Gaus(A, b, x);
 			x.Print();
@@ -65,7 +69,7 @@ int main() {
 	}
 }
 
-template <typename T>
+template <class T>
 void rand_slou(Matrix<T>& A, Vector<T>& b) {
 	for (int i = 0; i < A.GetM(); i++) {
 		for (int j = 0; j < A.GetN(); j++) {
