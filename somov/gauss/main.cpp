@@ -1,41 +1,63 @@
-ï»¿#include "matrix.h"
+#include "matrix.h"
 #include "vector.h"
 #include "solver.h"
 
 #include <iostream>
 #include <clocale>
+#include <limits>
 
 int main()
 {
 	std::setlocale(LC_CTYPE, "RUSSIAN");
 
-	size_t rows, cols;
-	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð½ÐµÐ¸Ð·Ð²ÐµÑÑ‚Ð½Ñ‹Ñ…, Ð·Ð°Ñ‚ÐµÐ¼ Ñ‡Ð¸ÑÐ»Ð¾ ÑƒÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ð¹" << std::endl;
+	size_t rows;
+	size_t cols;
+	int ch;
+	bool validInput = true;
+
+	std::cout << "Ââåäèòå ÷èñëî íåèçâåñòíûõ, çàòåì ÷èñëî óðàâíåíèé." << std::endl;
 	std::cin >> cols >> rows;
 
 	Matrix<double> m(rows, cols);
 	Vector<double> b(rows);
 	Solver s;
 
-	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¾ÑÐ½Ð¾Ð²Ð½ÑƒÑŽ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ñƒ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹" << std::endl;
-	std::cin >> m;
-	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð²ÐµÐºÑ‚Ð¾Ñ€ ÐºÐ¾ÑÑ„Ñ„Ð¸Ñ†Ð¸ÐµÐ½Ñ‚Ð¾Ð²" << std::endl;
-	std::cin >> b;
+	std::cout << "Âûáåðèòå ðåæèì ðàáîòû:\n1. Ââîä ìàòðèöû ÑËÓ âðó÷íóþ.\n2. Àâòîìàòè÷åñêè ñîçäàòü ìàòðèöó ÑËÓ." << std::endl;
+	std::cin >> ch;
 
-	std::cout << "ÐœÐ°Ñ‚Ñ€Ð¸Ñ†Ð° Ð±ÑƒÐ´ÐµÑ‚ Ð¸Ð¼ÐµÑ‚ÑŒ ÑÐ»ÐµÐ´ÑƒÑŽÑ‰Ð¸Ð¹ Ð²Ð¸Ð´:" << std::endl << m;
-	std::cout << "Ð’Ð²ÐµÐ´Ñ‘Ð½Ð½Ñ‹Ðµ ÐºÐ¾ÑÑ„Ñ„Ð¸Ñ†Ð¸ÐµÐ½Ñ‚Ñ‹:" << std::endl << b;
-
-	Vector<double> x(m.getWidth());
-
-	s.solve(m, x, b);
-	if (s.isCompatible())
+	switch (ch)
 	{
-		std::cout << "ÐÐ°Ð¹Ð´ÐµÐ½Ð½Ð¾Ðµ Ñ€ÐµÑˆÐµÐ½Ð¸Ðµ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹: " << x;
-		s.check(m, x, b);
+	case 1:
+		std::cout << "Ââåäèòå îñíîâíóþ ìàòðèöó ñèñòåìû" << std::endl;
+		std::cin >> m;
+		std::cout << "Ââåäèòå âåêòîð êîýôôèöèåíòîâ" << std::endl;
+		std::cin >> b;
+
+		std::cout << "Ìàòðèöà áóäåò èìåòü ñëåäóþùèé âèä:" << std::endl << m;
+		std::cout << "Ââåä¸ííûå êîýôôèöèåíòû:" << std::endl << b;
+		break;
+	case 2:
+		m.randFill();
+		b.randFill();
+		break;
+	default:
+		std::cout << "Âûáîð íå ðàñïîçíàí." << std::endl;
+		validInput = false;
+		break;
 	}
 
-	else
+	if (validInput)
 	{
-		std::cout << "Ð¡Ð¸ÑÑ‚ÐµÐ¼Ð° Ð½Ðµ ÑÐ¾Ð²Ð¼ÐµÑÑ‚Ð½Ð°" << std::endl;
+		Vector<double> x = s.solve(m, b);
+		if (s.isCompatible())
+		{
+			std::cout << "Íàéäåííîå ðåøåíèå ñèñòåìû:\n" << x;
+			s.evaluate(m, x, b);
+		}
+
+		else
+		{
+			std::cout << "Ñèñòåìà íå ñîâìåñòíà" << std::endl;
+		}
 	}
 }

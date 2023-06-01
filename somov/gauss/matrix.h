@@ -1,7 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include <iostream>
 #include <algorithm>
+#include <random>
+
+#define RANGE 100000000
+#define MIN -100000000
 
 template<class T>
 class Matrix
@@ -12,7 +16,7 @@ public:
 	~Matrix();
 
 	void set(size_t posx, size_t posy, T t);
-	void swap_rows(size_t row1, size_t row2);
+	void swapRows(size_t row1, size_t row2);
 
 	T& get(size_t posx, size_t posy);
 	size_t getWidth();
@@ -21,6 +25,8 @@ public:
 	T& get(size_t posx, size_t posy) const;
 	size_t getWidth() const;
 	size_t getHeight() const;
+
+	void randFill();
 
 	template <class V> friend std::ostream& operator<<(std::ostream& o, const Matrix<V>& m);
 	template <class V> friend std::istream& operator>>(std::istream& in, Matrix<V>& m);
@@ -59,8 +65,8 @@ template<class T>
 Matrix<T>::~Matrix()
 {
 	for (size_t i = 0; i < height; i++)
-		delete data[i];
-	delete data;
+		delete[] data[i];
+	delete[] data;
 }
 
 template<class T>
@@ -70,7 +76,7 @@ void Matrix<T>::set(size_t posx, size_t posy, T t)
 }
 
 template<class T>
-void Matrix<T>::swap_rows(size_t row1, size_t row2)
+void Matrix<T>::swapRows(size_t row1, size_t row2)
 {
 	std::swap(data[row1], data[row2]);
 }
@@ -109,6 +115,15 @@ template<class T>
 size_t Matrix<T>::getHeight() const
 {
 	return height;
+}
+
+template<class T>
+void Matrix<T>::randFill()
+{
+	std::srand(std::time(nullptr));
+	for (size_t r = 0; r < height; r++)
+		for (size_t c = 0; c < width; c++)
+			data[r][c] = std::rand() % RANGE - MIN;
 }
 
 template<class T>

@@ -1,4 +1,4 @@
-п»ї#pragma once
+#pragma once
 
 #include "matrix.h"
 #include "vector.h"
@@ -13,38 +13,42 @@ class Solver
 public:
 	Solver();
 
-	template<class T> void check(const Matrix<T>& m, const Vector<T>& x, const Vector<T>& b);
-	template<class T> void solve(Matrix<T> m, Vector<T>& x, Vector<T> b);
-	bool isCompatible() { return compatibility; }
+	template<class T> void evaluate(const Matrix<T>& m, const Vector<T>& x, const Vector<T>& b);
+	template<class T> Vector<T> solve(Matrix<T> m, Vector<T> b);
+	bool isCompatible() { return compatible; }
 
 private:
-	template<class T> void getMax(T& lead, const Matrix<T>& m, size_t pos);
+	// Поиск строки с наибольшим элементом 
+	template<class T> T getMax(const Matrix<T>& m, size_t pos);
+	// Проверка системы на совместность с помощью т. Кронекера-Капелли 
 	template<class T> bool checkCompatibility(const Matrix<T>& m, const Vector<T>& b);
 
+	// Переход к треугольному виду
 	template<class T> void toTriangle(Matrix<T>& m, Vector<T>& x, Vector<T>& b);
+	// Переход от треугольного вида к простейшему
 	template<class T> void toRowForm(Matrix<T>& m, Vector<T>& x, Vector<T>& b);
+	// Заполнение вектора решения
 	template<class T> void fillX(Matrix<T>& m, Vector<T>& x, Vector<T>& b);
 
-	bool compatibility;
+	bool compatible;
 
-	size_t proc_col;
-	size_t proc_row;
+	size_t processed;
 	size_t max_col;
 	size_t max_row;
 };
 
 Solver::Solver()
 {
-	proc_col = 0;
-	proc_row = 0;
+	processed = 0;
 	max_row = 0;
 	max_col = 0;
-	compatibility = true;
+	compatible = true;
 }
 
 template<class T>
-void Solver::check(const Matrix<T>& m, const Vector<T>& x, const Vector<T>& b)
+void Solver::evaluate(const Matrix<T>& m, const Vector<T>& x, const Vector<T>& b)
 {
+	std::cout << "Относительная и абсолютная разница между полученным и ожидаемым результатом" << std::endl;
 	for (size_t i = 0; i < m.getHeight(); i++)
 	{
 		T res = 0;
@@ -52,38 +56,42 @@ void Solver::check(const Matrix<T>& m, const Vector<T>& x, const Vector<T>& b)
 		for (size_t j = 0; j < m.getWidth(); j++)
 			res += m.get(i, j) * x[j];
 
-		std::cout << "Р Р°Р·РЅРёС†Р° РјРµР¶РґСѓ СЂРµР·СѓР»СЊС‚Р°С‚РѕРј РІС‹С‡РёСЃР»РµРЅРёСЏ СЃС‚СЂРѕРєРё " << i << " Рё СЃС‚СЂРѕРєРё РІРµРєС‚РѕСЂР° РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ: " << (res - b[i]) << std::endl;
+		std::cout << "Строка " << i+1 << ": " << res - b[i] << ", " << (res - b[i])/b[i] << std::endl;
 	}
 }
 
 template<class T>
-void Solver::solve(Matrix<T> m, Vector<T>& x, Vector<T> b)
+Vector<T> Solver::solve(Matrix<T> m, Vector<T> b)
 {
+	Vector<T> x(m.getWidth());
 	toTriangle(m, x, b);
-	compatibility = checkCompatibility(m, b);
+	compatible = checkCompatibility(m, b);
 
-	if (compatibility)
+	if (compatible)
 	{
 		toRowForm(m, x, b);
 		fillX(m, x, b);
 	}
+
+	return x;
 }
 
 template<class T>
-void Solver::getMax(T& lead, const Matrix<T>& m, size_t pos)
+T Solver::getMax(const Matrix<T>& m, size_t pos)
 {
-	lead = m.get(proc_row, pos);
-	max_row = proc_row;
+	T lead = m.get(processed, pos);
+	max_row = processed;
 	max_col = pos;
-	for (size_t i = proc_col; i < m.getHeight(); i++)
+	for (size_t i = processed; i < m.getHeight(); i++)
 		if (std::abs(m.get(i, pos)) > std::abs(lead))
 		{
 			lead = m.get(i, pos);
 			max_row = i;
 		}
+
+	return lead;
 }
 
-// РЎС‡РёС‚Р°РµРј СЂР°РЅРі РјР°С‚СЂРёС†С‹ СЃРёСЃС‚РµРјС‹ Рё СЂР°СЃС€РёСЂРµРЅРЅРѕР№ РјР°С‚СЂРёС†С‹, С‡С‚РѕР±С‹ РїСЂРѕРІРµСЂРёС‚СЊ СЃРёСЃС‚РµРјСѓ РЅР° СЃРѕРІРјРµСЃС‚РЅРѕСЃС‚СЊ
 template<class T>
 bool Solver::checkCompatibility(const Matrix<T>& m, const Vector<T>& b)
 {
@@ -113,27 +121,27 @@ bool Solver::checkCompatibility(const Matrix<T>& m, const Vector<T>& b)
 
 	}
 
-	proc_col = 0;
-	proc_row = 0;
-
 	return (matrix_rows == augmented_rows) ?
 		(true) : 
 		(false);
 }
 
-// РџРµСЂРµС…РѕРґ Рє С‚СЂРµСѓРіРѕР»СЊРЅРѕРјСѓ РІРёРґСѓ
 template<class T>
 void Solver::toTriangle(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 {
 	T lead = 0;
 	T fact = 0;
 
-	for (size_t row = 0; row < m.getHeight(); row++)
+	for (size_t row = 0; row < m.getHeight() && processed < m.getWidth(); row++, processed++)
 	{
-		getMax(lead, m, proc_col);
-		if (std::abs(lead) < std::numeric_limits<T>::epsilon()) continue;
-		m.swap_rows(max_row, row);
-		b.swap(max_row, row);
+		lead = getMax(m, processed);
+		if (std::abs(lead) < std::numeric_limits<T>::epsilon())
+		{
+			processed++;
+			continue;
+		}
+		m.swapRows(max_row, row);
+		b.swapRows(max_row, row);
 		max_row = row;
 		for (size_t i = row + 1; i < m.getHeight(); i++)
 		{
@@ -147,28 +155,28 @@ void Solver::toTriangle(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 			}
 			b[i] -= fact * b[max_row];
 		}
-
-		proc_col++;
-		proc_row++;
 	}
 
-	proc_col = 0;
-	proc_row = 0;
+	processed = 0;
 }
 
-// РџРµСЂРµС…РѕРґ РѕС‚ С‚СЂРµСѓРіРѕР»СЊРЅРѕРіРѕ РІРёРґР° Рє РїСЂРѕСЃС‚РµР№С€РµРјСѓ
 template<class T>
 void Solver::toRowForm(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 {
 	T lead = 0;
 	T fact = 0;
 
-	for (size_t row = 0; row < m.getHeight(); row++)
+	for (size_t row = 0; row < m.getHeight() && processed < m.getWidth(); row++, processed++)
 	{
-		getMax(lead, m, proc_col);
-		if (std::abs(lead) < std::numeric_limits<T>::epsilon()) continue;
-		m.swap_rows(max_row, row);
-		b.swap(max_row, row);
+		lead = getMax(m, processed);
+		if (std::abs(lead) < std::numeric_limits<T>::epsilon())
+		{
+			processed++;
+			continue;
+		}
+		
+		m.swapRows(max_row, row);
+		b.swapRows(max_row, row);
 		max_row = row;
 		for (size_t i = 0; i < row; i++)
 		{
@@ -182,9 +190,6 @@ void Solver::toRowForm(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 			}
 			b[i] -= fact * b[max_row];
 		}
-
-		proc_col++;
-		proc_row++;
 	}
 
 	for (size_t row = 0; row < m.getHeight(); row++)
@@ -195,26 +200,20 @@ void Solver::toRowForm(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 			if (std::abs(lead) > std::numeric_limits<T>::epsilon()) break;
 		}
 
+		if (std::abs(lead) < std::numeric_limits<T>::epsilon()) continue;
+
 		for (size_t col = 0; col < m.getWidth(); col++)
 			m.set(row, col, m.get(row, col) / lead);
 
 		b[row] /= lead;
 	}
+
+	processed = 0;
 }
 
-// Р—Р°РїРѕР»РЅСЏРµРј СЃС‚РѕР»Р±РµС† РёРєСЃРѕРІ
 template<class T>
 void Solver::fillX(Matrix<T>& m, Vector<T>& x, Vector<T>& b)
 {
-	proc_row = 0;
-	for (size_t row = 0; row < m.getHeight(); row++)
-	{
-		for (size_t col = row; col < m.getWidth(); col++)
-			if (std::abs(m.get(row, col)) > std::numeric_limits<T>::epsilon())
-			{
-				x[proc_row] = b[row];
-				proc_row++;
-				break;
-			}
-	}
+	for (size_t row = 0; row < m.getWidth() && row < b.getHeight(); row++)
+		x[row] = b[row];
 }

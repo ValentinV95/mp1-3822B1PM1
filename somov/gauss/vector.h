@@ -1,7 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include <iostream>
 #include <algorithm>
+#include <random>
+
+#define RANGE 100000000
+#define MIN -100000000
 
 template <class T>
 class Vector
@@ -16,7 +20,8 @@ public:
 	T& operator[](size_t pos) const;
 	size_t getHeight() const;
 
-	void swap(size_t pos1, size_t pos2);
+	void swapRows(size_t pos1, size_t pos2);
+	void randFill();
 
 	template<class V> friend std::ostream& operator<<(std::ostream& o, const Vector<V>& v);
 	template<class V> friend std::istream& operator>>(std::istream& in, Vector<V>& v);
@@ -45,7 +50,7 @@ Vector<T>::Vector(const Vector<T>& v)
 template<class T>
 Vector<T>::~Vector()
 {
-	delete data;
+	delete[] data;
 }
 
 template<class T>
@@ -73,17 +78,24 @@ T& Vector<T>::operator[](size_t pos) const
 }
 
 template<class T>
-void Vector<T>::swap(size_t pos1, size_t pos2)
+void Vector<T>::swapRows(size_t pos1, size_t pos2)
 {
 	std::swap(data[pos1], data[pos2]);
+}
+
+template<class T>
+void Vector<T>::randFill()
+{
+	std::srand(std::time(nullptr));
+	for (size_t r = 0; r < height; r++)
+		data[r] = std::rand() % RANGE - MIN;
 }
 
 template<class T>
 std::ostream& operator<<(std::ostream& o, const Vector<T>& v)
 {
 	for (size_t i = 0; i < v.height; i++)
-		o << v.data[i] << " ";
-	o << std::endl;
+		o << "v[" << i+1 << "]=" << v.data[i] << std::endl;
 	return o;
 }
 
