@@ -32,6 +32,10 @@ public:
     {
         return arr[i];
     }
+    T& operator [](int i) const
+    {
+        return arr[i];
+    }
     void fill(int mod)//auto-random or manual filling matrix
     {
         if (mod)
@@ -52,31 +56,19 @@ public:
     {
         return size;
     }
-    square_matrix& operator=(square_matrix& _m)
+    int get_size() const
     {
-        if (size == _m.get_size())
-        {
-            #pragma omp parallel for
-            for (int i = 0; i < size; i++)
-                for (int j = 0; j < size; j++)
-                    arr[i * size + j] = _m[i * size + j];
-
-            return *this;
-        }
-        else throw "not equal sizes";
+        return size;
     }
     square_matrix& operator=(const square_matrix& _m)
     {
-        if (size == _m.get_size())
-        {
+        if (size != _m.get_size()) throw "not equal sizes";
             #pragma omp parallel for
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                     arr[i * size + j] = _m[i * size + j];
 
             return *this;
-        }
-        else throw "not equal sizes";
     }
 };
 

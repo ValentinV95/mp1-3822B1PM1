@@ -29,7 +29,7 @@ public:
     {
         return arr[i];
     }
-    const T& operator [](int i) const
+    T& operator [](int i) const
     {
         return arr[i];
     }
@@ -53,14 +53,6 @@ public:
     int get_size() const
     {
         return size;
-    }
-    vector& operator=(vector& _v)
-    {
-        if (size != _v.get_size()) throw "not equal sizes";
-
-        for (int i = 0; i < size; i++)
-            arr[i] = _v[i];
-        return *this;
     }
     vector& operator=(const vector& _v)
     {
