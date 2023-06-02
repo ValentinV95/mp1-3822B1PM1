@@ -65,20 +65,19 @@ public:
 
     void swap(int i, int j) //swap i-row with j-row in matrix and i-element with j-element in vector
     {
-        vector<T> tmp(size);
-        T temp;
-        for (int k = 0; k < size; k++)
+        //vector<T> tmp(size);
+        //T temp;
+        /*for (int k = 0; k < size; k++)
             tmp[k] = m[i * size + k];
 
         for (int k = 0; k < size; k++)
             m[i * size + k] = m[j * size + k];
 
         for (int k = 0; k < size; k++)
-            m[j * size + k] = tmp[k];
-
-        temp = v[i];
-        v[i] = v[j];
-        v[j] = temp;
+            m[j * size + k] = tmp[k];*/
+        for (int k = 0; k < size; k++)
+            std::swap(m[i * size + k], m[j * size + k]);
+        std::swap(v[j], v[i]);
     }
 
     int solution() //solving Ax=b (mx=v) //2 - det=0 & no solutions, 1 - det=0 & infinity solutions, 0 - the only one solution (v) 

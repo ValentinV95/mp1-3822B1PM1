@@ -29,7 +29,7 @@ public:
     {
         return arr[i];
     }
-    T& operator [](int i) const
+    const T& operator [](int i) const
     {
         return arr[i];
     }
