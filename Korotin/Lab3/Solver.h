@@ -4,7 +4,7 @@ template <class T>
 class Solver {
     Vec<T> solve;
 public:
-    Vec<T> Gauss(Matrix<T>& A, Vec<T>& b) {
+    Vec<T> Gauss(Matrix<T> A, Vec<T> b) {
         if (A.GetSize() == b.GetSize()) {
             int max, j = 0;
             double eps = pow(10, -8);
@@ -54,7 +54,7 @@ public:
                     break;
                 }
             };
-            for (int i = 0; i < size; ++i) string[i].GetMas() = nullptr;
+            for (int i = 0; i < size; ++i) (string[i]).setVec(0, nullptr);
             delete[] string;
             return b;
         }
@@ -67,7 +67,7 @@ void Linear_system(int size) {
     Matrix<T> A(size);
     Vec<T> b(size);
     Solver<T> solve;
-    Vec<T> X;
+    Vec<T> X(size);
     setlocale(LC_ALL, "Russian");
     system("cls");
     do {

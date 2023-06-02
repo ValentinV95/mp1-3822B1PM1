@@ -9,6 +9,11 @@ public:
         size = _size;
         cap = new T[_size * _size];
     }
+    Matrix(const Matrix& A) {
+        size = A.size;
+        cap = new T[size*size];
+        for (int i = 0; i < size * size; ++i) cap[i] = A.cap[i];
+    }
     void reSize(size_t _size) {
         delete[] cap;
         size = _size;
