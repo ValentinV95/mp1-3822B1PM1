@@ -85,6 +85,15 @@ public:
 		}
 	}
 
+	T* operator[](size_t i)
+	{
+		return mat[i];
+	}
+
+	/*T& operator()(int ind1, int ind2) {
+        return arr[ind1][ind2];
+    }*/
+
 	T& GetValue(int i, int j) { return mat[i][j]; }
 	void SetValue(int i, int j, T value) { mat[i][j] = value; }
 	size_t GetM() { return m; }

@@ -24,7 +24,9 @@ int main() {
 			Solver<float> s;
 			if (choice_rand == 1) {
 				rand_slou(A, b);
+				std::cout << "Ваша матрица А:" << std::endl;
 				A.Print();
+				std::cout << "Ваша матрица b:" << std::endl;
 				b.Print();
 			}
 			else {
@@ -32,7 +34,9 @@ int main() {
 				A.Scan();
 				std::cout << "Введите элементы матрицы b" << std::endl;
 				b.Scan();
+				std::cout << "Ваша матрица А:" << std::endl;
 				A.Print();
+				std::cout << "Ваша матрица b:" << std::endl;
 				b.Print();
 			}
 			s.Gaus(A, b, x);
@@ -46,7 +50,9 @@ int main() {
 			Solver<double> s;
 			if (choice_rand == 1) {
 				rand_slou(A, b);
+				std::cout << "Ваша матрица А:" << std::endl;
 				A.Print();
+				std::cout << "Ваша матрица b:" << std::endl;
 				b.Print();
 			}
 			else {
@@ -54,10 +60,13 @@ int main() {
 				A.Scan();
 				std::cout << "Введите элементы матрицы b" << std::endl;
 				b.Scan();
+				std::cout << "Ваша матрица А:" << std::endl;
 				A.Print();
+				std::cout << "Ваша матрица b:" << std::endl;
 				b.Print();
 			}
 			s.Gaus(A, b, x);
+			std::cout << "Ответ" << std::endl;
 			x.Print();
 			break;
 		}
@@ -73,8 +82,8 @@ template <class T>
 void rand_slou(Matrix<T>& A, Vector<T>& b) {
 	for (int i = 0; i < A.GetM(); i++) {
 		for (int j = 0; j < A.GetN(); j++) {
-			A.SetValue(i, j, ((T)rand()) / 100);
+			A[i][j] = ((T)rand()) / 100;//A.SetValue(i, j, ((T)rand()) / 100)
 		}
-		b.SetValue(i, ((T)rand()) / 100);
+		b[i] = ((T)rand()) / 100;//b.SetValue(i, ((T)rand()) / 100)
 	}
 }
