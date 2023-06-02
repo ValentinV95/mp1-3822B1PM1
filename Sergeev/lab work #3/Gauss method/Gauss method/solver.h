@@ -65,16 +65,6 @@ public:
 
     void swap(int i, int j) //swap i-row with j-row in matrix and i-element with j-element in vector
     {
-        //vector<T> tmp(size);
-        //T temp;
-        /*for (int k = 0; k < size; k++)
-            tmp[k] = m[i * size + k];
-
-        for (int k = 0; k < size; k++)
-            m[i * size + k] = m[j * size + k];
-
-        for (int k = 0; k < size; k++)
-            m[j * size + k] = tmp[k];*/
         for (int k = 0; k < size; k++)
             std::swap(m[i * size + k], m[j * size + k]);
         std::swap(v[j], v[i]);
