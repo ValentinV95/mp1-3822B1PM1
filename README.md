@@ -1,2 +1,2 @@
 # mp1-3822B1PM1
-Центральный репозиторий практики группы 3822Б1ПМ1 по курсу ЯиМП
+Won't see me online until new lab work is given

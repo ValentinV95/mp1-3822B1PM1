@@ -1,0 +1,9 @@
+﻿cl : командная строка  warning D9035: использование параметра "Gm" нежелательно, он будет удален в следующих выпусках
+  tset.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\bit(12): warning STL4038: The contents of <bit> are available only with C++20 or later.
+A:\ПРОЕКТЫ\ИНФОРМАТЕША\Программирование ВУЗ\mp2-2023-lab1-set-master\mp2-2023-lab1-set-master\include\tbitfield.h(27,13): error C3861: bit_width: идентификатор не найден
+A:\ПРОЕКТЫ\ИНФОРМАТЕША\Программирование ВУЗ\mp2-2023-lab1-set-master\mp2-2023-lab1-set-master\src\tset.cpp(128,9): warning C4552: "~": результат выражения не используется
+  tbitfield.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\bit(12): warning STL4038: The contents of <bit> are available only with C++20 or later.
+A:\ПРОЕКТЫ\ИНФОРМАТЕША\Программирование ВУЗ\mp2-2023-lab1-set-master\mp2-2023-lab1-set-master\include\tbitfield.h(27,13): error C3861: bit_width: идентификатор не найден
+  Создание кода...
